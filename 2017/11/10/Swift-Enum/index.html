@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Swift," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Farmer, keshiim 播种太阳🌞" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="枚举为一组相关值定义了一个通用类型，从而可以让你在代码中类型安全地操作这些值。 如果你熟悉 C ，那么你可能知道 C 中的枚举会给一组整数值分配相关的名称。Swift 中的枚举则更加灵活，并且不需给枚举中的每一个成员都提供值。如果一个值（所谓“原始”值）要被提供给每一个枚举成员，那么这个值可以是字符串、字符、任意的整数值，或者是浮点类型。 而且，枚举成员可以指定任意类型的值来与不同的成员值关联储存">
+<meta name="keywords" content="Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift：枚举">
+<meta property="og:url" content="https://keshiim.github.io/2017/11/10/Swift-Enum/index.html">
+<meta property="og:site_name" content="Farmer, keshiim 播种太阳🌞">
+<meta property="og:description" content="枚举为一组相关值定义了一个通用类型，从而可以让你在代码中类型安全地操作这些值。 如果你熟悉 C ，那么你可能知道 C 中的枚举会给一组整数值分配相关的名称。Swift 中的枚举则更加灵活，并且不需给枚举中的每一个成员都提供值。如果一个值（所谓“原始”值）要被提供给每一个枚举成员，那么这个值可以是字符串、字符、任意的整数值，或者是浮点类型。 而且，枚举成员可以指定任意类型的值来与不同的成员值关联储存">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://keshiim.github.io/2017/11/10/Swift-Enum/barcode_UPC_2x.png">
+<meta property="og:image" content="https://keshiim.github.io/2017/11/10/Swift-Enum/barcode_QR_2x.png">
+<meta property="og:updated_time" content="2018-03-20T09:56:53.651Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift：枚举">
+<meta name="twitter:description" content="枚举为一组相关值定义了一个通用类型，从而可以让你在代码中类型安全地操作这些值。 如果你熟悉 C ，那么你可能知道 C 中的枚举会给一组整数值分配相关的名称。Swift 中的枚举则更加灵活，并且不需给枚举中的每一个成员都提供值。如果一个值（所谓“原始”值）要被提供给每一个枚举成员，那么这个值可以是字符串、字符、任意的整数值，或者是浮点类型。 而且，枚举成员可以指定任意类型的值来与不同的成员值关联储存">
+<meta name="twitter:image" content="https://keshiim.github.io/2017/11/10/Swift-Enum/barcode_UPC_2x.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://keshiim.github.io/2017/11/10/Swift-Enum/"/>
+
+
+
+
+
+  <title>Swift：枚举 | Farmer, keshiim 播种太阳🌞</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?921c9b00f7bef5665a875398ea470185";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Farmer, keshiim 播种太阳🌞</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">小n快乐成长🍉</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://keshiim.github.io/2017/11/10/Swift-Enum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zheng keshiim">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Farmer, keshiim 播种太阳🌞">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift：枚举</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-10T18:53:11+08:00">
+                2017-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/10/Swift-Enum/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/10/Swift-Enum/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/11/10/Swift-Enum/" class="leancloud_visitors" data-flag-title="Swift：枚举">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>枚举为一组相关值定义了一个通用类型，从而可以让你在代码中类型安全地操作这些值。</p>
+<p>如果你熟悉 C ，那么你可能知道 C 中的枚举会给一组<code>整数值</code>分配相关的名称。Swift 中的枚举则更加灵活，并且不需给枚举中的每一个成员都提供值。如果一个值（所谓“原始”值）要被提供给每一个枚举成员，那么这个值可以是<code>字符串</code>、<code>字符</code>、<code>任意的整数值</code>，或者是<code>浮点类型</code>。</p>
+<p>而且，<em>枚举成员</em>可以指定<strong>任意类型</strong>的值来与<em>不同的成员值关联储存</em>，这更像是其他语言中的 union 或variant 的效果。你可以定义一组相关成员的合集作为枚举的一部分，每一个成员都可以有不同类型的值的合集与其关联。</p>
+<p>Swift 中的枚举是具有自己<em>权限的一类类型</em>。它们使用了许多一般只被类所支持的特性，例如<strong>计算属性</strong>用来提供关于枚举当前值的额外信息，并且<strong>实例方法</strong>用来提供与枚举表示的值相关的功能。枚举同样也能够<strong>定义初始化器</strong>来初始化成员值；而且能够<strong>遵循协议</strong>来提供标准功能。(🐂吧？)</p>
+<h3 id="枚举语法"><a href="#枚举语法" class="headerlink" title="枚举语法"></a>枚举语法</h3><p>你可以用 <code>enum</code>关键字来定义一个枚举，然后将其所有的定义内容放在一个大括号（<code>{}</code>）中</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">SomeEnumeration</span> </span>&#123;</div><div class="line">    <span class="comment">// enumeration definition goes here</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这是一个指南针的四个主要方向的例子：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">CompassPoint</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> north</div><div class="line">    <span class="keyword">case</span> south</div><div class="line">    <span class="keyword">case</span> east</div><div class="line">    <span class="keyword">case</span> west</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在一个枚举中定义的值（比如： north， south， east和 west）就是枚举的<em>成员值</em>（或成员） <code>case</code><strong>关键字则明确了要定义成员值</strong>。</p>
+<blockquote>
+<p>不像 C 和 Objective-C 那样，Swift 的枚举成员在被创建时<strong>不会分配一个默认的整数值</strong>。在上文的 <code>CompassPoint</code>例子中， <code>north</code>， <code>south</code>， <code>east</code>和 <code>west</code>并不代表 0， 1， 2和 3。而相反，不同的枚举成员在它们自己的权限中都是<em>完全合格</em>的值，并且是一个在 CompassPoint中被显式定义的类型。</p>
+</blockquote>
+<p>多个成员值可以出现在同一行中，要用逗号隔开：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Planet</span> </span>&#123;</div><div class="line">    <span class="comment">//行星</span></div><div class="line">    <span class="keyword">case</span> mercury, venus, earth, mars, jupiter, saturn, uranus, neptune</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>正如 Swift 中其它的类型那样，它们的名称（例如： <code>CompassPoint</code>和 <code>Planet</code>）需要<strong>首字母大写</strong>。给枚举类型起一个单数的而不是复数的名字，从而使得它们能够顾名思义：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> directionToHead = <span class="type">CompassPoint</span>.west</div></pre></td></tr></table></figure>
+<p>好玩的语法：当与 <code>CompassPoint</code>中可用的某一值一同初始化时 <code>directionToHead</code>的类型会被推断出来。一旦 <code>directionToHead</code>以 <code>CompassPoint</code>类型被声明，你就可以用一个点语法把它设定成不同的 <code>CompassPoint</code>值。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">directionToHead = .east <span class="comment">//东</span></div></pre></td></tr></table></figure>
+<h3 id="使用-Switch-语句来匹配枚举值"><a href="#使用-Switch-语句来匹配枚举值" class="headerlink" title="使用 Switch 语句来匹配枚举值"></a>使用 Switch 语句来匹配枚举值</h3><p>用 <code>switch</code>语句来匹配每一个单独的枚举值：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> directionToHead &#123;</div><div class="line"><span class="keyword">case</span> .north:</div><div class="line">    <span class="built_in">print</span>(<span class="string">"Lots of planets have a north"</span>)</div><div class="line"><span class="keyword">case</span> .south:</div><div class="line">    <span class="built_in">print</span>(<span class="string">"Watch out for penguins"</span>)</div><div class="line"><span class="keyword">case</span> .east:</div><div class="line">    <span class="built_in">print</span>(<span class="string">"Where the sun rises"</span>)</div><div class="line"><span class="keyword">case</span> .west:</div><div class="line">    <span class="built_in">print</span>(<span class="string">"Where the skies are blue"</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">//print Where the sun rises</span></div></pre></td></tr></table></figure>
+<p>正如在控制流中所描述的那样，当判断一个枚举成员时， <code>switch</code>语句应该是全覆盖的。如果 <code>.west</code>的 <code>case</code>被省略了，那么<em>代码将不能编译</em>，因为这时表明它并没有覆盖 <code>CompassPoint</code>的所有成员。要求覆盖所有枚举成员是因为这样可以保证枚举成员不会意外的被漏掉。</p>
+<p>否者，使用<code>default</code>情况来包含那些不被显示明确写出的成员：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> somePlanet = <span class="type">Planet</span>.earth</div><div class="line"><span class="keyword">switch</span> somePlanet &#123;</div><div class="line"><span class="keyword">case</span> .earth:</div><div class="line">    <span class="built_in">print</span>(<span class="string">"Mostly harmless"</span>)</div><div class="line"><span class="keyword">default</span>:</div><div class="line">    <span class="built_in">print</span>(<span class="string">"Not a safe place for humans"</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">// Prins "Mossly harmless"</span></div></pre></td></tr></table></figure>
+<h3 id="关联值"><a href="#关联值" class="headerlink" title="关联值"></a>关联值</h3><p>上面的栗子展示了枚举成员是怎样在他们各自的权限中被<em>定义</em>（和被分类）的。你可以给 <code>Planet.earth</code>设定常量或变量，然后再使用这个值。总之，<strong>有时将其它类型的关联值与这些成员值一起存储是很有用的</strong>。这样你就可以将额外的<em>自定义信息</em>和<em>成员值</em>一起储存，并且允许你在代码中使用每次调用这个成员时都能使用它。</p>
+<p>你可以定义 Swift 枚举来存储任意给定类型的关联值，如果需要的话不同枚举成员关联值的类型可以不同。</p>
+<p>举个栗子，假设库存跟踪系统需要按两个不同类型的条形码跟踪产品，一些产品贴的是用数字 <code>0~9</code> 的 <code>UPC-A</code> 格式一维条形码。每一个条码数字都含有一个“数字系统”位，之后是五个“制造商代码”数字和五个“产品代码”数字。而最后则是一个“检测”位来验证代码已经被正确扫描：<br><img style="margin: auto" src="/2017/11/10/Swift-Enum/barcode_UPC_2x.png" alt="barcode_UPC_2x" title="条形码示例"><br>其它的产品则贴着二维码，它可以使用任何 <code>ISO 8859-1</code> 字符并且编码最长有 <code>2953</code> 个字符的字符串：<br><img style="margin: auto" src="/2017/11/10/Swift-Enum/barcode_QR_2x.png" alt="barcode_QR_2x" title="二维码示例"><br>这样可以让库存跟踪系统很方便的以一个由 4 个整数组成的元组来储存 <code>UPC-A</code> 条形码，然而二维码则可以被存储为一个任意长度的字符串中。</p>
+<p>在 Swift 中，为不同类型产品条码定义枚举大概是这种姿势：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Barcode</span> </span>&#123;</div><div class="line">    <span class="comment">//关联值</span></div><div class="line">    <span class="keyword">case</span> upc(<span class="type">Int</span>, <span class="type">Int</span>, <span class="type">Int</span>, <span class="type">Int</span>)</div><div class="line">    <span class="keyword">case</span> qrCode(<span class="type">String</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这可以读作：</p>
+<p>“<em>定义一个叫做 <code>Barcode</code>的枚举类型，它要么用 <code>(Int, Int, Int, Int)</code>类型的关联值获取 <code>upc</code> 值，要么用 <code>String</code> 类型的关联值获取一个 <code>qrCode</code>的值。</em>”</p>
+<p>这个定义并不提供任何实际的 <code>Int</code>或者 <code>String</code>的值——它只定义当 <code>Barcode</code>常量和变量与 <code>Barcode. upc</code>或 <code>Barcode. qrCode</code><strong>相同时可以存储的关联值的类型</strong>。</p>
+<p>新的条码就可以用任意一个类型来创建了：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> productBarcode = <span class="type">Barcode</span>.upc(<span class="number">8</span>, <span class="number">85909</span>, <span class="number">51226</span>, <span class="number">3</span>)</div></pre></td></tr></table></figure>
+<p>这个栗子创建了一个叫做 <code>productBarcode</code>的新变量而且给它赋值了一个 <code>Barcode.upc的值</code><em>关联了</em>值为 <code>(8, 85909, 51226, 3)</code>的<em>元组值</em>。</p>
+<p>同样的产品可以被分配一个不同类型的条码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">productBarcode = .qrCode(<span class="string">"ABCDEFGHIJKLMNOP"</span>)</div></pre></td></tr></table></figure>
+<p>这时，最初的 <code>Barcode.upc</code>和它的整数值将被新的 <code>Barcode.qrCode</code>和它的字符串值代替。 <code>Barcode</code>类型的常量和变量可以存储一个 <code>.upc</code>或一个 <code>.qrCode</code>（和它们的相关值一起存储）中的任意一个，但是它们只可以在给定的时间内存储它们其中之一。</p>
+<p>不同的条码类型可以用 <code>switch</code> 语句来检查。这一次，总之，相关值可以被提取为 <code>switch</code> 语句的一部分。你提取的每一个相关值都可以作为常量（用 <code>let</code>前缀) 或者变量（用 <code>var</code>前缀）在 <code>switch</code>的 <code>case</code>中使用：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> productBarcode &#123;</div><div class="line"><span class="keyword">case</span> .upc(<span class="keyword">let</span> numberSystem, <span class="keyword">let</span> manufacturer, <span class="keyword">let</span> product, <span class="keyword">let</span> check):</div><div class="line">    <span class="built_in">print</span>(<span class="string">"UPC: <span class="subst">\(numberSystem)</span>, <span class="subst">\(manufacturer)</span>, <span class="subst">\(product)</span>, <span class="subst">\(check)</span>."</span>)</div><div class="line"><span class="keyword">case</span> .qrCode(<span class="keyword">let</span> productCode):</div><div class="line">    <span class="built_in">print</span>(<span class="string">"QR code: <span class="subst">\(productCode)</span>."</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">// Prints "QR code: ABCDEFGHIJKLMNOP."</span></div></pre></td></tr></table></figure>
+<p>如果对于一个枚举成员的所有的相关值<strong>都</strong>被提取为<em>常量</em>，或如果<strong>都</strong>被提取为<em>变量</em>，为了简洁，你可以用一个单独的 <code>var</code>或 <code>let</code>在成员名称前标注：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> productBarcode &#123;</div><div class="line"><span class="keyword">case</span> <span class="keyword">let</span> .upc(numberSystem, manufacturer, product, check):</div><div class="line">    <span class="built_in">print</span>(<span class="string">"UPC : <span class="subst">\(numberSystem)</span>, <span class="subst">\(manufacturer)</span>, <span class="subst">\(product)</span>, <span class="subst">\(check)</span>."</span>)</div><div class="line"><span class="keyword">case</span> <span class="keyword">let</span> .qrCode(productCode):</div><div class="line">    <span class="built_in">print</span>(<span class="string">"QR code: <span class="subst">\(productCode)</span>."</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">// Prints "QR code: ABCDEFGHIJKLMNOP."</span></div></pre></td></tr></table></figure>
+<h3 id="原始值"><a href="#原始值" class="headerlink" title="原始值"></a>原始值</h3><p><em>关联值</em> 中条形码的栗子展示了枚举成员是如何声明它们存储不同类型的相关值的。作为相关值的另一种选择，<em>枚举成员</em>可以用<strong>相同类型的默认值</strong>预先填充（称为<em>原始值</em>）。</p>
+<p>这里有一个和已命名的枚举成员一起存储的原始 ASCII 码的例子：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ASCIIControlCharacter</span>: <span class="title">Character</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> tab = <span class="string">"\t"</span></div><div class="line">    <span class="keyword">case</span> lineFeed = <span class="string">"\n"</span></div><div class="line">    <span class="keyword">case</span> carriageReturn = <span class="string">"\r"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里，一个叫做 <code>ASCIIControlCharacter</code>的枚举原始值被定义为类型 <code>Character</code>，并且被放置在了更多的一些 <code>ASCII</code> 控制字符中。</p>
+<blockquote>
+<p>注意：原始值与关联值不同。原始值是当你第一次定义枚举的时候，它们用来预先填充的值，正如上面的三个 ASCII 码。特定枚举成员的<strong>原始值是始终相同的</strong>。<strong>关联值</strong>在你基于枚举成员的其中之一<strong>创建新的常量或变量时</strong>设定，并且在你每次这么做的时候这些关联值可以是<em>不同的</em>。</p>
+</blockquote>
+<h4 id="隐式指定的原始值"><a href="#隐式指定的原始值" class="headerlink" title="隐式指定的原始值"></a>隐式指定的原始值</h4><p>当你在操作存储整数或字符串原始值枚举的时候， <em>你不必显式地给每一个成员都分配一个原始值</em> 。当你没有分配时，Swift <em>将会自动为你分配值</em>。</p>
+<p>实际上，当整数值被用于作为原始值时，每成员的隐式值都<em>比前一个大一</em>。如果第一个成员没有值，那么它的值是 <code>0</code>。</p>
+<p>下面的枚举是先前的 <code>Planet</code>枚举的简化，用整数原始值来代表从太阳到每一个行星的顺序：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Planet</span>: <span class="title">Int</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> mercury = <span class="number">1</span>, venus, earth, mars, jupiter, saturn, uranus, neptune</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此🌰：<code>Planet.mercury</code>有一个明确的原始值 <code>1</code> ， <code>Planet.venus</code>的隐式原始值是 <code>2</code>，以此类推。</p>
+<p>当<em>字符串</em>被用于原始值，那么每一个成员的<em>隐式原始值</em>则是那个成员的<strong>名称</strong>。</p>
+<p>下面的枚举是先前 <code>CompassPoint</code>枚举的简化，有<em>字符串的原始值</em>来代表每一个方位的名字：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">CompassPoint</span>: <span class="title">String</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> north, south, east, west</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>CompassPoint.south</code>有一个隐式原始值 “south” ，以此类推。</p>
+<p>你可以用 <code>rawValue</code>属性来访问一个枚举成员的<em>原始值</em>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> earthsOrder = <span class="type">Planet</span>.<span class="type">Earth</span>.rawValue</div><div class="line"><span class="comment">// earthsOrder is 3</span></div><div class="line"> </div><div class="line"><span class="keyword">let</span> sunsetDirection = <span class="type">CompassPoint</span>.west.rawValue</div><div class="line"><span class="comment">// sunsetDirection is "west"</span></div></pre></td></tr></table></figure>
+<h4 id="从原始值初始化"><a href="#从原始值初始化" class="headerlink" title="从原始值初始化"></a>从原始值初始化</h4><p>如果你用原始值类型来定义一个枚举，那么枚举就会自动收到一个可以接受原始值类型的值的初始化器（叫做 <code>rawValue</code>的形式参数）然后返回一个<strong>枚举成员</strong>或者 <code>nil</code> 。你可以使用这个初始化器来尝试创建一个枚举的新实例。</p>
+<p>这个例子从它的原始值 <code>7</code>来辨认出 <code>Uranus</code> ：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> possiblePlanet = <span class="type">Planet</span>(rawValue: <span class="number">7</span>)</div><div class="line"><span class="comment">// possiblePlanet is of type Planet? and equals Planet.Uranus</span></div></pre></td></tr></table></figure>
+<p>总之，不是所有可能的 <code>Int</code>值都会对应一个行星。因此原始值的初始化器总是返回可选的枚举成员。在上面的例子中， <code>possiblePlanet</code>的类型是 <code>Planet?</code> ，或者“可选项 <code>Planet</code>”</p>
+<p>如果你尝试寻找有位置 <code>11</code>的行星，那么被原始值初始化器返回的可选项 <code>Planet</code>值将会是 <code>nil</code>:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> positionToFind = <span class="number">11</span></div><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> somePlanet = <span class="type">Planet1</span>(rawValue: positionToFind) &#123;</div><div class="line">    <span class="keyword">switch</span> somePlanet &#123;</div><div class="line">    <span class="keyword">case</span> .earth:</div><div class="line">        <span class="built_in">print</span>(<span class="string">"Mostly harmless"</span>)</div><div class="line">    <span class="keyword">default</span>:</div><div class="line">        <span class="built_in">print</span>(<span class="string">"Not a safe place for humans"</span>)</div><div class="line">    &#125;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"There isn`t a planet at position <span class="subst">\(positionToFind)</span>"</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">// Prints "There isn`t a planet at position 11"</span></div></pre></td></tr></table></figure>
+<h3 id="递归枚举"><a href="#递归枚举" class="headerlink" title="递归枚举"></a>递归枚举</h3><p>枚举在对序号考虑固定数量可能性的数据建模时表现良好，比如用来做简单整数运算的运算符。这些运算符允许你组合简单的整数数学运算表达式比如<code>5</code>到更复杂的比如<code>5+4</code>.</p>
+<p>数学表达式的一大特征就是它们可以<strong>内嵌</strong>。比如说表达式<code>(5 + 4) * 2</code> 在乘法右手侧有一个数但其他表达式在乘法的左手侧。因为数据被内嵌了，用来储存数据的枚举同样需要支持内嵌——这意味着枚举需要被递归。</p>
+<p><strong>递归枚举</strong>是拥有另一个枚举作为枚举成员关联值的枚举。当编译器操作递归枚举时必须插入<em>间接寻址层</em>。你可以在声明枚举成员之前使用 <code>indirect</code>关键字来明确它是<strong>递归</strong>的。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">ArithmeticExpresstion</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> number(<span class="type">Int</span>)</div><div class="line">    <span class="keyword">indirect</span> <span class="keyword">case</span> addition(<span class="type">ArithmeticExpresstion</span>, <span class="type">ArithmeticExpresstion</span>)</div><div class="line">    <span class="keyword">indirect</span> <span class="keyword">case</span> multiplication(<span class="type">ArithmeticExpresstion</span>, <span class="type">ArithmeticExpresstion</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>你同样可以在枚举之前写 <code>indirect</code> 来让整个枚举成员在需要时可以递归：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">indirect</span> <span class="class"><span class="keyword">enum</span> <span class="title">ArithmeticExpresstion</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> number(<span class="type">Int</span>)</div><div class="line">    <span class="keyword">case</span> addition(<span class="type">ArithmeticExpresstion</span>, <span class="type">ArithmeticExpresstion</span>)</div><div class="line">    <span class="keyword">case</span> multiplication(<span class="type">ArithmeticExpresstion</span>, <span class="type">ArithmeticExpresstion</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个枚举可以储存三种数学运算表达式：<em>单一的数字</em>，<em>两个两个表达式的加法</em>，<em>以及两个表达式的乘法</em>。 <code>addition</code> 和 <code>multiplication</code> 成员拥有同样是<strong>数学表达式的关联值—</strong>—这些关联值让嵌套表达式成为可能。比如说，表达式<code>(5 + 4) * 2</code> 乘号右侧有一个<strong>数字</strong>左侧有<strong>其他表达式</strong>。由于数据是内嵌的，用来储存数据的枚举同样需要支持内嵌——这就是说枚举需要<strong>递归</strong>。下边的代码展示了为 <code>(5 + 4) * 2</code>创建的递归枚举 <code>ArithmeticExpression</code> ：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> five = <span class="type">ArithmeticExpresstion</span>.number(<span class="number">5</span>)</div><div class="line"><span class="keyword">let</span> four = <span class="type">ArithmeticExpresstion</span>.number(<span class="number">4</span>)</div><div class="line"><span class="keyword">let</span> sum  = <span class="type">ArithmeticExpresstion</span>.addition(five, four)</div><div class="line"><span class="keyword">let</span> product = <span class="type">ArithmeticExpresstion</span>.multiplication(sum, <span class="type">ArithmeticExpresstion</span>.number(<span class="number">2</span>))</div></pre></td></tr></table></figure>
+<p>递归函数是一种操作<em>递归结构</em>数据的简单方法。比如说，这里有一个判断数学表达式的函数：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">evaluate</span><span class="params">(<span class="number">_</span> expression: ArithmeticExpresstion)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">    <span class="keyword">switch</span> expression &#123;</div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .number(value):</div><div class="line">        <span class="keyword">return</span> value</div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .addition(<span class="keyword">left</span>, <span class="keyword">right</span>):</div><div class="line">        <span class="keyword">return</span> evaluate(<span class="keyword">left</span>) + evaluate(<span class="keyword">right</span>)</div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .multiplication(<span class="keyword">left</span>, <span class="keyword">right</span>):</div><div class="line">        <span class="keyword">return</span> evaluate(<span class="keyword">left</span>) * evaluate(<span class="keyword">right</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">print</span>(evaluate(product))</div><div class="line"><span class="comment">// Prints "18"</span></div></pre></td></tr></table></figure>
+<p>这个函数通过直接返回<strong>关联值来判断普通数字</strong>。它通过衡量表达式<strong>左手侧和右手侧</strong>判断是<strong>加法还是乘法</strong>，然后对它们加或者乘。</p>
+<blockquote>
+<p>摘自：<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0" target="_blank" rel="external">swift 官网</a><br>所有代码在Xcode9 Swift4 环境编译没问题，代码<a href="https://github.com/keshiim/LearnSwift4" target="_blank" rel="external">戳这里 https://github.com/keshiim/LearnSwift4</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Zheng keshiim WeChat Pay"/>
+        <p>WeChat Pay(微信)</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Zheng keshiim Alipay"/>
+        <p>Alipay(支付宝)</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zheng keshiim
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://keshiim.github.io/2017/11/10/Swift-Enum/" title="Swift：枚举">https://keshiim.github.io/2017/11/10/Swift-Enum/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/10/closure/" rel="next" title="Swift：闭包">
+                <i class="fa fa-chevron-left"></i> Swift：闭包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/14/Array-Partition-I/" rel="prev" title="Leetcode-561 Array Partition I">
+                Leetcode-561 Array Partition I <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Zheng keshiim" />
+          <p class="site-author-name" itemprop="name">Zheng keshiim</p>
+           
+              <p class="site-description motion-element" itemprop="description">一个☝程序猿的播种天地</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keshiim" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Jasonzhengkeshi" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1997859257" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jason-zheng-17/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      知乎
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#枚举语法"><span class="nav-number">1.</span> <span class="nav-text">枚举语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Switch-语句来匹配枚举值"><span class="nav-number">2.</span> <span class="nav-text">使用 Switch 语句来匹配枚举值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联值"><span class="nav-number">3.</span> <span class="nav-text">关联值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原始值"><span class="nav-number">4.</span> <span class="nav-text">原始值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#隐式指定的原始值"><span class="nav-number">4.1.</span> <span class="nav-text">隐式指定的原始值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从原始值初始化"><span class="nav-number">4.2.</span> <span class="nav-text">从原始值初始化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#递归枚举"><span class="nav-number">5.</span> <span class="nav-text">递归枚举</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zheng keshiim</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://keshiim.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://keshiim.github.io/2017/11/10/Swift-Enum/';
+          this.page.identifier = '2017/11/10/Swift-Enum/';
+          this.page.title = 'Swift：枚举';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://keshiim.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("II40xJrcdEwAMUcs8t0GQCM7-gzGzoHsz", "6u6FB7dghxObIE4zhaUKCYoF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

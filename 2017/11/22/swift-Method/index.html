@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Swift," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Farmer, keshiim 播种太阳🌞" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="方法 是关联了特定类型的 函数 。类，结构体以及枚举都能定义实例方法，方法封装了给定类型特定的任务和功能。类，结构体和枚举同样可以定义类型方法，这是与类型本身关联的方法。类型方法与 Objective-C 中的类方法相似。 事实上在 结构体和枚举中定义方法 是 Swift 语言与 C 语言和 Objective-C 的主要区别。在 Objective-C 中，类是唯一能定义方法的类型。但是在 Sw">
+<meta name="keywords" content="Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift：方法">
+<meta property="og:url" content="https://keshiim.github.io/2017/11/22/swift-Method/index.html">
+<meta property="og:site_name" content="Farmer, keshiim 播种太阳🌞">
+<meta property="og:description" content="方法 是关联了特定类型的 函数 。类，结构体以及枚举都能定义实例方法，方法封装了给定类型特定的任务和功能。类，结构体和枚举同样可以定义类型方法，这是与类型本身关联的方法。类型方法与 Objective-C 中的类方法相似。 事实上在 结构体和枚举中定义方法 是 Swift 语言与 C 语言和 Objective-C 的主要区别。在 Objective-C 中，类是唯一能定义方法的类型。但是在 Sw">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-20T09:56:53.668Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift：方法">
+<meta name="twitter:description" content="方法 是关联了特定类型的 函数 。类，结构体以及枚举都能定义实例方法，方法封装了给定类型特定的任务和功能。类，结构体和枚举同样可以定义类型方法，这是与类型本身关联的方法。类型方法与 Objective-C 中的类方法相似。 事实上在 结构体和枚举中定义方法 是 Swift 语言与 C 语言和 Objective-C 的主要区别。在 Objective-C 中，类是唯一能定义方法的类型。但是在 Sw">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://keshiim.github.io/2017/11/22/swift-Method/"/>
+
+
+
+
+
+  <title>Swift：方法 | Farmer, keshiim 播种太阳🌞</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?921c9b00f7bef5665a875398ea470185";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Farmer, keshiim 播种太阳🌞</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">小n快乐成长🍉</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://keshiim.github.io/2017/11/22/swift-Method/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zheng keshiim">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Farmer, keshiim 播种太阳🌞">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift：方法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T17:44:49+08:00">
+                2017-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/22/swift-Method/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/22/swift-Method/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/11/22/swift-Method/" class="leancloud_visitors" data-flag-title="Swift：方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>方法</strong> 是关联了<em>特定类型</em>的 <em>函数</em> 。类，结构体以及枚举都能定义<strong>实例方法</strong>，方法封装了给定类型特定的任务和功能。类，结构体和枚举同样可以定义<strong>类型方法</strong>，这是与类型本身关联的方法。类型方法与 Objective-C 中的类方法相似。</p>
+<p>事实上在 <em>结构体和枚举中定义方法</em> 是 Swift 语言与 C 语言和 Objective-C 的<strong>主要区别</strong>。在 Objective-C 中，类是唯一能定义方法的类型。但是在 Swift ，你可以选择无论类，结构体还是枚举，它们都拥有强大的灵活性来在你创建的类型中定义方法。</p>
+<h3 id="实例方法"><a href="#实例方法" class="headerlink" title="实例方法"></a>实例方法</h3><p>实例方法 是属于 <strong>特定</strong> 类实例、结构体实例或者枚举实例的函数。他们为这些实例提供功能性，要么通过提供访问和修改实例属性的方法，要么通过提供与实例相关的功能。实例方法与函数的语法完全相同。</p>
+<p>要写一个实例方法，你需要把它放在对应类的花括号之间。实例方法默认可以访问同类下所有其他实例方法和属性。<strong>实例方法只能在类型的具体实例里被呼叫（<code>call</code>）</strong>。它不能在独立于实例而被调用。</p>
+<p>举例子：这里有个定义 <code>Counter</code>类的栗子，它可以用来计算动作发生的次数：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> <span class="built_in">count</span> = <span class="number">0</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">increment</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">count</span> += <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">increment</span><span class="params">(by amount: Int)</span></span> &#123;</div><div class="line">        <span class="built_in">count</span> += amount</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">reset</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">count</span> = <span class="number">0</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Counter</code> 类定义了三个实例方法：</p>
+<ul>
+<li><code>increment</code>每次给计数器增加 1；</li>
+<li><code>increment(by: Int)</code>按照特定的整型数量来增加计数器；</li>
+<li><code>reset</code>会把计数器重置为零。</li>
+</ul>
+<p><code>Counter</code>类同样声明了一个<em>变量属性</em> <code>count</code>来追踪当前计数器的<strong>值</strong>。</p>
+<p>调用实例方法与属性一样都是用<strong>点语法</strong>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> counter = <span class="type">Counter</span>()</div><div class="line"><span class="comment">// the initial counter value is 0</span></div><div class="line">counter.increment()</div><div class="line"><span class="comment">// the counter's value is now 1</span></div><div class="line">counter.increment(by: <span class="number">5</span>)</div><div class="line"><span class="comment">// the counter's value is now 6</span></div><div class="line">counter.reset()</div><div class="line"><span class="comment">// the counter's value is now 0</span></div></pre></td></tr></table></figure>
+<p>如同函数实际参数标签和形式参数名中描述的那样，同样的，对于方法的形式参数来说与函数也是神同步的，因为方法就是与类型关联的《函数》。</p>
+<h4 id="self-属性"><a href="#self-属性" class="headerlink" title="self 属性"></a>self 属性</h4><p>每一个类的实例都隐含一个叫做 <code>self</code>的属性，它完完全全与实例本身相等。你可以使用 <code>self</code>属性来在当前实例当中调用它自身的方法。<br>在上边的例子中， <code>increment()</code>方法可以写成这样：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">increment</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="keyword">self</span>.<span class="built_in">count</span> += <span class="number">1</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实际上，你不需要经常在代码中写 <code>self</code>。如果你没有显式地写出 <code>self</code>，Swift会在方法中使用已知属性或者方法的时候<strong>假定你是调用了当前实例中的属性或者方法</strong>。这个假定通过在 <code>Counter</code>的三个实例方法中使用 <code>count</code>（而不是 <code>self.count</code>）来做了<strong>示范</strong>。</p>
+<p>对于这个规则的一个重要例外就是当一个实例方法的形式参数名与实例中某个属性拥有相同的名字的时候。在这种情况下，<strong>形式参数名具有优先权</strong>，并且调用属性的时候使用更加严谨的方式就很有必要了。你可以使用 <code>self</code>来<strong>区分*</strong>形式参数名和属性名*。</p>
+<p>这时， <code>self</code>就避免了叫做 <code>x</code> 的方法形式参数还是同样叫做 <code>x</code> 的实例属性这样的歧义。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">0.0</span>, y = <span class="number">0.0</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">isToTheRightOf</span><span class="params">(x: Double)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">self</span>.x &gt; x</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> somePoint = <span class="type">Point</span>(x: <span class="number">4.0</span>, y: <span class="number">5.0</span>)</div><div class="line"><span class="keyword">if</span> somePoint.isToTheRightOf(x: <span class="number">1.0</span>) &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"This point is to the right of the line where x == 1.0"</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">//Print "This point is to the right of the line where x == 1.0"</span></div></pre></td></tr></table></figure>
+<p>除去 <code>self</code> 前缀，Swift 将会假定两个 x 都是叫做<code>( x )</code>的方法<strong>形式参数</strong>。</p>
+<h4 id="在实例方法中修改值类型"><a href="#在实例方法中修改值类型" class="headerlink" title="在实例方法中修改值类型"></a>在实例方法中修改值类型</h4><p>结构体和枚举是<strong>值类型</strong>。默认情况下，值类型属性不能被自身的实例方法修改。</p>
+<p>总之，如果你需要在<em>特定的方法中修改结构体或者枚举的属性</em>，你可以选择将这个方法<em>异变</em>。然后这个方法就可以在方法中异变（嗯，改变）它的属性了，并且任何改变在方法结束的时候都会写入到原始的结构体中。方法同样可以指定一个全新的实例给它隐含的 <code>self</code>属性，并且这个新的实例将会在方法结束的时候替换掉现存的这个实例。<br>你可以选择在 <code>func</code>关键字前放一个 <code>mutating</code>关键字来使用这个行为：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">0.0</span>, y = <span class="number">0.0</span></div><div class="line">    <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">moveBy</span><span class="params">(x deltaX: Double, y deltaY: Double)</span></span> &#123;</div><div class="line">        x += deltaX</div><div class="line">        y += deltaY</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> somePoint = <span class="type">Point</span>(x: <span class="number">1.0</span>, y: <span class="number">1.0</span>) <span class="comment">// not let somePoint</span></div><div class="line">somePoint.moveBy(x: <span class="number">2.0</span>, y: <span class="number">3.0</span>)</div><div class="line"><span class="built_in">print</span>(<span class="string">"The point is now at (<span class="subst">\(somePoint.x)</span>, <span class="subst">\(somePoint.y)</span>)"</span>)</div><div class="line"><span class="comment">// prints "The point is now at (3.0, 4.0)"</span></div></pre></td></tr></table></figure>
+<p>上文中的 <code>Point</code> 结构体定义了一个<strong>异变</strong>方法 <code>moveBy(x:y:)</code>，它以特定的数值移动一个 <code>Point</code>实例。相比于返回一个新的点，这个方法实际上修改了调用它的点。 被添加到定义中的 <code>mutating</code>关键字允许它修改自身的属性。</p>
+<p>注意，如同 <strong>常量</strong>结构体实例的存储属性 里描述的那样，你不能在<strong>常量结构体类型里调用异变方法</strong>，因为自身属性不能被改变，就算它们是变量属性：</p>
+<p>下面代码中调用会编译报错：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> fixedPoint = <span class="type">Point</span>(x: <span class="number">3.0</span>, y: <span class="number">3.0</span>)</div><div class="line">fixedPoint.moveBy(x: <span class="number">2.0</span>, y: <span class="number">3.0</span>)</div><div class="line"><span class="comment">// this will report an error</span></div></pre></td></tr></table></figure>
+<h4 id="在变异方法里指定自身"><a href="#在变异方法里指定自身" class="headerlink" title="在变异方法里指定自身"></a>在变异方法里指定自身</h4><p>变异方法可以指定整个<strong>实例给隐含的<code>self</code>属性</strong>。上文中那个<code>Point</code>的栗子可以用下边的代码替代：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">0.0</span>, y = <span class="number">0.0</span></div><div class="line">    <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">moveBy</span><span class="params">(x deltaX: Double, y deltaY: Double)</span></span> &#123;</div><div class="line">        <span class="keyword">self</span> = <span class="type">Point</span>(x: x + deltaX, y: y + deltaY)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这次的异变方法 <code>moveBy(x:y:)</code>创建了一个 <code>x</code>和 <code>y</code>设置在目的坐标的全新的结构体。调用这个版本的方法和的结果会和之前那个完全一样。</p>
+<p><strong>枚举</strong>的<em>异变方法</em>可以设置隐含的 <code>self</code>属性为相同枚举里的不同成员：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">TriStateSwitch</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> off, low, high</div><div class="line">    <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">next</span> <span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</div><div class="line">        <span class="keyword">case</span> .low:</div><div class="line">            <span class="keyword">self</span> = .high</div><div class="line">        <span class="keyword">case</span> .off:</div><div class="line">            <span class="keyword">self</span> = .low</div><div class="line">        <span class="keyword">case</span> .high:</div><div class="line">            <span class="keyword">self</span> = .off</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> ovenLight = <span class="type">TriStateSwitch</span>.low</div><div class="line">ovenLight.next()</div><div class="line"><span class="comment">// ovenLight is now equal to .high</span></div><div class="line">ovenLight.next()</div><div class="line"><span class="comment">// ovenLight is now equal to .off</span></div></pre></td></tr></table></figure>
+<p>这个栗子定义了一个三种开关状态的枚举。每次调用 <code>next()</code>方法时，这个开关就会在三种不同的电力状态（ <code>Off</code> , <code>low</code>和 <code>high</code>）下切换。</p>
+<h3 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h3><p>如上文描述的那样，<em>实例方法</em>是特定类型实例中调用的方法。你同样可以定义在类型本身调用的方法。这类方法被称作<strong>类型方法</strong>。你可以通过在 <code>func</code>关键字之前使用 <code>static</code>关键字来明确一个类型方法。<br>类同样可以使用 <code>class</code>关键字来允许子类重写父类对类型方法的实现。</p>
+<blockquote>
+<p>注意：<br>在 Objective-C 中，你只能在 Objective-C 的类中定义<strong>类级别</strong>的方法。但是在 Swift 里，你可以在所有的类里定义类级别的方法，<strong>还有结构体和枚举</strong>。每一个类方法都能够对它自身的类范围显式生效。</p>
+</blockquote>
+<p>类型方法和实例方法一样<strong>使用点语法调用</strong>。不过，你得在类上调用类型方法，而不是这个类的实例。接下来是一个在 <code>SomeClass</code>类里调用类型方法的栗子：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">someTypeMethod</span>() </span>&#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"调用了someclass"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="type">SomeClass</span>.someTypeMethod()</div><div class="line"><span class="comment">//Prints "用了someclass"</span></div></pre></td></tr></table></figure>
+<p>在类型方法的函数体中，<strong>隐含</strong>的 <code>self</code>属性指向了类本身而不是这个类的实例。对于结构体和枚举，这意味着你可以使用 <code>self</code>来 <em>消除类型属性和类型方法形式参数之间的歧义</em> ，用法和实例属性与实例方法形式参数之间的用法完全相同。</p>
+<p>一般来说，你在类型方法函数体内书写的任何非完全标准的方法和属性名 都将会指向另一个类级别的<em>方法和属性</em>。一个类型方法可以使用方法名调用另一个类型方法， <em>并不需要使用类型名字作为前缀</em> 。同样的，结构体和枚举中的类型方法也可以通过直接使用类型属性名而不需要写类型名称前缀来访问类型属性。</p>
+<p>下边的栗子定义了一个叫做 <code>LevelTracker</code>的结构体，它通过不同的等级或者阶层来追踪玩家的游戏进度。这是一个单人游戏，但是可以在一个设备上储存多个玩家的信息。</p>
+<p>当游戏第一次开始的时候所有的的游戏等级（除了第一级）都是锁定的。每当一个玩家完成一个等级，那这个等级就对设备上的所有玩家解锁。 <code>LevelTracker</code>结构体使用类型属性和方法来追踪解锁的游戏等级。它同样追踪每一个独立玩家的当前等级。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">LevelTracker</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> hightestUnlockedLevel = <span class="number">1</span></div><div class="line">    <span class="keyword">var</span> currentLevel = <span class="number">1</span></div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">unlock</span><span class="params">(<span class="number">_</span> level: Int)</span></span> &#123;</div><div class="line">        <span class="keyword">if</span> level &gt; hightestUnlockedLevel &#123; hightestUnlockedLevel = level &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">isUnlocked</span><span class="params">(<span class="number">_</span> level: Int)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">        <span class="keyword">return</span> level &lt;= hightestUnlockedLevel</div><div class="line">    &#125;</div><div class="line">    @discardableResult</div><div class="line">    <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">advance</span><span class="params">(to level: Int)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">        <span class="keyword">if</span> <span class="type">LevelTracker</span>.isUnlocked(level) &#123;</div><div class="line">            currentLevel = level</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>LevelTracker</code>结构体持续追踪任意玩家解锁的最高等级。这个值被储存在叫做 <code>highestUnlockedLevel</code>的类型属性里边。</p>
+<p><code>LevelTracker</code>同时还定义了两个类型函数来操作 <code>highestUnlockedLevel</code>属性。第一个类型函数叫做 <code>unlock(_:)</code>，它在新等级解锁的时候更新 <code>highestUnlockedLevel</code>。第二个是叫做 <code>isUnlocked(_:)</code>的便捷类型方法，如果特定等级已经解锁，则返回 <code>true</code>。（注意这些类型方法可以访问 <code>highestUnlockedLevel</code>类型属性而并不需要写作 <code>LevelTracker.highestUnlockedLevel</code>。）</p>
+<p>除了其自身的类型属性和类型方法， <code>LevelTracker</code>还追踪每一个玩家在游戏中的进度。它使用一个实例属性 <code>currentLevel</code>来追踪当前游戏中的游戏等级。</p>
+<p>为了帮助管理 <code>currentLevel</code>属性， <code>LevelTracker</code>定义了一个叫做 <code>advance(to:)</code>的实例方法。在更新 <code>currentLevel</code>之前，这个方法会检查请求的新等级是否解锁。 <code>advance(to:)</code>方法返回一个布尔值来明确它是否真的可以设置 <code>currentLevel</code>。由于调用时<strong>忽略</strong> <code>advance(to:)</code> 的返回值并不是什么大不了的问题，这个函数用 <code>@discardableResult</code> <strong>标注</strong>。</p>
+<p>看下边的栗子， <code>LevelTracker</code>结构体与 <code>Player</code>类共同使用来追踪和更新每一个玩家的进度：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Player</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> tracker = <span class="type">LevelTracker</span>()</div><div class="line">    <span class="keyword">let</span> playerName: <span class="type">String</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">completedLevel</span><span class="params">(level: Int)</span></span> &#123;</div><div class="line">        <span class="type">LevelTracker</span>.unlockLevel(level + <span class="number">1</span>)</div><div class="line">        tracker.advanceToLevel(level + <span class="number">1</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">init</span>(name: <span class="type">String</span>) &#123;</div><div class="line">        playerName = name</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Player</code>类创建了一个新的 <code>LevelTracker</code>实例 来追踪玩家的进度。它同事提供了一个叫做 <code>complete(level:)</code>的方法，这个方法在玩家完成一个特定等级的时候会被调用。这个方法会为所有的玩家解锁下一个等级并且更新玩家的进度到下一个等级。（ <code>advance(to:)</code>返回的布尔值被忽略掉了，因为等级已经在先前调用 <code>LevelTracker.unlock(_:)</code>时已知解锁。）<br>你可以通过为 <code>Player</code>类创建一个实例来新建一个玩家，然后看看当玩家达成等级<code>1</code>时会发生什么：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> player = <span class="type">Player</span>(name: <span class="string">"Argyrios"</span>)</div><div class="line">player.complete(level: <span class="number">1</span>)</div><div class="line"><span class="built_in">print</span>(<span class="string">"highest unlocked level is now <span class="subst">\(LevelTracker.highestUnlockedLevel)</span>"</span>)</div><div class="line"><span class="comment">// Prints "highest unlocked level is now 2"</span></div><div class="line"><span class="keyword">var</span> player = <span class="type">Player</span>(name: <span class="string">"Argyrios"</span>)</div><div class="line">player.complete(level: <span class="number">1</span>)</div><div class="line"><span class="built_in">print</span>(<span class="string">"highest unlocked level is now <span class="subst">\(LevelTracker.highestUnlockedLevel)</span>"</span>)</div><div class="line"><span class="comment">// Prints "highest unlocked level is now 2"</span></div></pre></td></tr></table></figure>
+<p>如果你创建了第二个玩家，当你让他尝试进入尚未被任何玩家在游戏中解锁的等级时， 设置玩家当前等级的尝试将会失败：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">player = <span class="type">Player</span>(name: <span class="string">"Beto"</span>)</div><div class="line"><span class="keyword">if</span> player.tracker.<span class="built_in">advance</span>(to: <span class="number">6</span>) &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"player is now on level 6"</span>)</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"level 6 has not yet been unlocked"</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">// Prints "level 6 has not yet been unlocked"</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>摘自：<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0" target="_blank" rel="external">swift 官网</a><br>所有代码在Xcode9 Swift4 环境编译没问题，代码<a href="https://github.com/keshiim/LearnSwift4" target="_blank" rel="external">戳这里 https://github.com/keshiim/LearnSwift4</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Zheng keshiim WeChat Pay"/>
+        <p>WeChat Pay(微信)</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Zheng keshiim Alipay"/>
+        <p>Alipay(支付宝)</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zheng keshiim
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://keshiim.github.io/2017/11/22/swift-Method/" title="Swift：方法">https://keshiim.github.io/2017/11/22/swift-Method/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/22/1-bit-and-2-bit-Characters/" rel="next" title="Leetcode-717 1-bit and 2-bit Characters">
+                <i class="fa fa-chevron-left"></i> Leetcode-717 1-bit and 2-bit Characters
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/23/Leedcode-283-Move-Zeroes/" rel="prev" title="Leedcode-283 Move Zeroes">
+                Leedcode-283 Move Zeroes <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Zheng keshiim" />
+          <p class="site-author-name" itemprop="name">Zheng keshiim</p>
+           
+              <p class="site-description motion-element" itemprop="description">一个☝程序猿的播种天地</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keshiim" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Jasonzhengkeshi" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1997859257" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jason-zheng-17/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      知乎
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例方法"><span class="nav-number">1.</span> <span class="nav-text">实例方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#self-属性"><span class="nav-number">1.1.</span> <span class="nav-text">self 属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在实例方法中修改值类型"><span class="nav-number">1.2.</span> <span class="nav-text">在实例方法中修改值类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在变异方法里指定自身"><span class="nav-number">1.3.</span> <span class="nav-text">在变异方法里指定自身</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类方法"><span class="nav-number">2.</span> <span class="nav-text">类方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zheng keshiim</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://keshiim.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://keshiim.github.io/2017/11/22/swift-Method/';
+          this.page.identifier = '2017/11/22/swift-Method/';
+          this.page.title = 'Swift：方法';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://keshiim.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("II40xJrcdEwAMUcs8t0GQCM7-gzGzoHsz", "6u6FB7dghxObIE4zhaUKCYoF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Swift," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Farmer, keshiim 播种太阳🌞" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Swift 使用自动引用计数(ARC)机制来追踪和管理你的 App 的内存。在大多数情况下，这意味着 Swift 的内存管理机制会一直起作用，你不需要自己考虑内存管理。当这些实例不在需要时，ARC会自动释放类实例所占用的内存。 总之，在少数情况下，为了能帮助你管理内存，ARC需要更多关于你代码之间的关系信息。这里将描述了这些情况并向你展示如何启用ARC来管理你 App 的内存。在 Swift 中使">
+<meta name="keywords" content="Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift：自动引用计数">
+<meta property="og:url" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/index.html">
+<meta property="og:site_name" content="Farmer, keshiim 播种太阳🌞">
+<meta property="og:description" content="Swift 使用自动引用计数(ARC)机制来追踪和管理你的 App 的内存。在大多数情况下，这意味着 Swift 的内存管理机制会一直起作用，你不需要自己考虑内存管理。当这些实例不在需要时，ARC会自动释放类实例所占用的内存。 总之，在少数情况下，为了能帮助你管理内存，ARC需要更多关于你代码之间的关系信息。这里将描述了这些情况并向你展示如何启用ARC来管理你 App 的内存。在 Swift 中使">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/referenceCycle01_2x.png">
+<meta property="og:image" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/referenceCycle02_2x.png">
+<meta property="og:image" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/referenceCycle03_2x.png">
+<meta property="og:image" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/weakReference01_2x.png">
+<meta property="og:image" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/weakReference02_2x.png">
+<meta property="og:image" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/weakReference03_2x.png">
+<meta property="og:image" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/unownedReference01_2x.png">
+<meta property="og:image" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/unownedReference02_2x.png">
+<meta property="og:image" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/closureReferenceCycle01_2x.png">
+<meta property="og:image" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/closureReferenceCycle02_2x.png">
+<meta property="og:updated_time" content="2018-03-20T09:56:53.652Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift：自动引用计数">
+<meta name="twitter:description" content="Swift 使用自动引用计数(ARC)机制来追踪和管理你的 App 的内存。在大多数情况下，这意味着 Swift 的内存管理机制会一直起作用，你不需要自己考虑内存管理。当这些实例不在需要时，ARC会自动释放类实例所占用的内存。 总之，在少数情况下，为了能帮助你管理内存，ARC需要更多关于你代码之间的关系信息。这里将描述了这些情况并向你展示如何启用ARC来管理你 App 的内存。在 Swift 中使">
+<meta name="twitter:image" content="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/referenceCycle01_2x.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/"/>
+
+
+
+
+
+  <title>Swift：自动引用计数 | Farmer, keshiim 播种太阳🌞</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?921c9b00f7bef5665a875398ea470185";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Farmer, keshiim 播种太阳🌞</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">小n快乐成长🍉</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zheng keshiim">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Farmer, keshiim 播种太阳🌞">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift：自动引用计数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-06T10:59:35+08:00">
+                2017-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/06/Swift-automatic-reference-counting/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/12/06/Swift-automatic-reference-counting/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/12/06/Swift-automatic-reference-counting/" class="leancloud_visitors" data-flag-title="Swift：自动引用计数">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Swift 使用<strong>自动引用计数(ARC)机制</strong>来追踪和管理你的 App 的内存。在大多数情况下，这意味着 Swift 的内存管理机制会一直起作用，你不需要自己考虑内存管理。当这些实例不在需要时，ARC会自动释放类实例所占用的内存。</p>
+<p>总之，在少数情况下，为了能帮助你管理内存，ARC需要更多关于你代码之间的关系信息。这里将描述了这些情况并向你展示如何启用ARC来管理你 App 的内存。在 Swift 中使用 ARC 与 _<a href="https://developer.apple.com/library/prerelease/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html#//apple_ref/doc/uid/TP40011226" target="_blank" rel="external">Transitioning to ARC Release Notes</a>_ 中描述的在 Objective-C 中使用 ARC 十分相似。</p>
+<blockquote>
+<p><em>引用计数只应用于类的实例</em>。结构体和枚举是值类型，不是引用类型，没有通过引用存储和传递</p>
+</blockquote>
+<h3 id="ARC的工作机制"><a href="#ARC的工作机制" class="headerlink" title="ARC的工作机制"></a>ARC的工作机制</h3><p>每次你创建一个类的实例，ARC 会分配一大块内存来存储这个实例的信息。这些内存中保留有实例的类型信息，以及该实例所有存储属性值的信息。</p>
+<p>此外，当实例不需要时，ARC 会释放该实例所占用的内存，释放的内存用于其他用途。这确保类实例当它不在需要时，不会一直占用内存。</p>
+<p>然而，如果 ARC 释放了正在使用的实例内存，那么它将不会访问实例的属性，或者调用实例的方法。确实，如果你试图访问该实例，<em>你的app很可能会崩溃</em>。</p>
+<p>为了确保使用中的实例不会消失，ARC 会跟踪和计算当前实例被多少属性，常量和变量所引用。只要存在对该类实例的引用，ARC 将不会释放该实例。</p>
+<p>为了使这些成为可能，<strong>无论你将实例分配给属性，常量或变量，它们都会创建该实例的强引用</strong>。之所以称之为<strong>“强”</strong>引用，是因为它会将实例保持住，只要强引用还在，实例是不允许被销毁的。</p>
+<h3 id="ARC"><a href="#ARC" class="headerlink" title="ARC"></a>ARC</h3><p>下面的例子展示了自动引用计数的工作机制。这个例子由一个简单的 <code>Person</code> 类开始，定义了一个名为 <code>name</code> 的存储常量属性:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">init</span>(name: <span class="type">String</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.name = name</div><div class="line">        <span class="built_in">print</span>(<span class="string">"<span class="subst">\(name)</span> is being initialized"</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">deinit</span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"<span class="subst">\(name)</span> is being deinitialized"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>Person</code> 类有一个初始化器，它设置了实例的 <code>name</code> 属性并且输出一条信息表明初始化器生效。 <code>Person</code> 类也有一个反初始化器，会在类的实例被销毁的时候打印一条信息。</p>
+<p>下面的代码片段定义了三个 <code>Peroson?</code> 类型的变量，用来按照代码中的顺序，为新的 <code>Person</code> 实例设置多个引用。由于<em>可选类型的变量会被自动初始化为一个</em> <code>nil</code> <em>值</em>，目前还不会引用到 <code>Person</code> 类的实例。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> reference1: <span class="type">Person</span>?</div><div class="line"><span class="keyword">var</span> reference2: <span class="type">Person</span>?</div><div class="line"><span class="keyword">var</span> reference3: <span class="type">Person</span>?</div></pre></td></tr></table></figure>
+<p>你可以创建一个新的 <code>Person</code> 实例并且将它赋值给三个变量中的一个：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">reference1 = <span class="type">Person</span>(name: <span class="string">"John Appleseed"</span>)</div><div class="line"><span class="comment">// prints "John Appleseed is being initialized"</span></div></pre></td></tr></table></figure>
+<p>注意，当调用 <code>person</code> 类的出初始化器的时候，会输出 “John Appleseed is being initialized” 信息。这就说明初始化执行了。</p>
+<p>因为 <code>Person</code> 实例已经赋值给了 <code>reference1</code> 变量，现在就有了一个从 <code>reference1</code> 到该实例的强引用。因为至少有一个强引用，ARC可以确保 <code>Person</code> 一直保持在内存中不被销毁。</p>
+<p>如果你将同一个 <code>Person</code> 实例分配给了两个变量，则该实例又会多出两个强引用：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">reference2 = reference1</div><div class="line">reference3 = reference1</div></pre></td></tr></table></figure>
+<p>如果你通过给其中两个变量赋值 <code>nil</code> 的方式断开两个强引用（包括最先的那个强引用），只留下一个强引用， <code>Person</code> 实例不会被销毁：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">reference1 = <span class="literal">nil</span></div><div class="line">reference2 = <span class="literal">nil</span></div></pre></td></tr></table></figure>
+<p>在你清楚地表明不再使用这个 <code>Person</code> 实例时，直到第三个也就是最后一个强引用被断开时 ARC 会销毁它。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">reference3 = <span class="literal">nil</span></div><div class="line"><span class="comment">// prints "John Appleseed is being deinitialized"</span></div></pre></td></tr></table></figure>
+<h3 id="类实例之间的循环强引用"><a href="#类实例之间的循环强引用" class="headerlink" title="类实例之间的循环强引用"></a>类实例之间的循环强引用</h3><p>在上面的例子中，ARC 能够追踪你所创建的 <code>Person</code> 实例的引用数量，并且会在 <code>Person</code> 实例不在使用时销毁。</p>
+<p>总之，写出某个类<strong>永远</strong>不会变成零强引用的代码是可能的。如果两个类实例彼此持有对方的强引用，因而每个实例都让对方一直存在，就会发生这种情况。这就是所谓的<strong>循环强引用</strong>。</p>
+<p>解决循环强引用问题，可以通过定义类之间的关系为<em>弱引用( <code>weak</code> )</em>或<em>无主引用( <code>unowned</code> )</em>来代替强引用。这个过程在解决类实例之间的循环强引用中有描述。总之，在你学习如何解决循环强引用问题前，了解一下它是如何产生的也是很有意义的事情。</p>
+<p>下面的例子展示了一个如何意外地创建循环强引用的例子。这个例子定义了两个类，分别是 <code>Person</code> 和 <code>Apartment</code> ，用来建模公寓和它其中的居民：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">init</span>(name: <span class="type">String</span>) &#123; <span class="keyword">self</span>.name = name &#125;</div><div class="line">    <span class="keyword">var</span> apartment: <span class="type">Apartment</span>?</div><div class="line">    <span class="keyword">deinit</span> &#123; <span class="built_in">print</span>(<span class="string">"<span class="subst">\(name)</span> is being deinitialized"</span>) &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Apartment</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> unit: <span class="type">String</span></div><div class="line">    <span class="keyword">init</span>(unit: <span class="type">String</span>) &#123; <span class="keyword">self</span>.unit = unit &#125;</div><div class="line">    <span class="keyword">var</span> tenant: <span class="type">Person</span>?</div><div class="line">    <span class="keyword">deinit</span> &#123; <span class="built_in">print</span>(<span class="string">"Apartment <span class="subst">\(unit)</span> is being deinitialized"</span>) &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>每一个 <code>Person</code> 实例有一个类型为 <code>String</code> ，名字为 <code>name</code> 的属性，并有一个可选的初始化为 <code>nil</code> 的 <code>apartment</code> 属性。 <code>apartment</code> 属性是可选项，因为一个人并不总是拥有公寓。</p>
+<p>类似的，每个 <code>Apartment</code> 实例都有一个叫 <code>unit</code> ，类型为 <code>String</code> 的属性，并有一个可选的初始化为 <code>nil</code> 的 <code>tenant</code> 属性。 <code>tenant</code> 属性是可选的，因为一栋公寓并不总是有居民。</p>
+<p>这两个类都定义了反初始化器，用以在类实例被反初始化时输出信息。这让你能够知晓 <code>Person</code> 和 <code>Apartment</code> 的实例是否像预期的那样被释放。</p>
+<p>接下来的代码片段定义了两个可选项变量 <code>john</code> 和 <code>unit4A</code> ，它们分别被赋值为下面的 <code>Apartment</code> 和 <code>Person</code> 的实例。这两个变量都被初始化为 <code>nil</code> ，这正是可选项的优点：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> john: <span class="type">Person</span>?</div><div class="line"><span class="keyword">var</span> unit4A: <span class="type">Apartment</span>?</div></pre></td></tr></table></figure>
+<p>在两个实例的强引用创建和分配之后，下图表现了强引用的关系。 <code>John</code> 变量对 <code>Person</code> 实例有一个强引用， <code>unit4A</code> 变量对 <code>Apartment</code> 实例有一个强引用:<br><img style="margin: auto" src="/2017/12/06/Swift-automatic-reference-counting/referenceCycle01_2x.png" alt="referenceCycle01_2x" title="John unit4A引用关系图"><br>现在你就可以把这两个实例关联在一起，这样人就有公寓了，而且公寓有房间号。注意，<strong>感叹号</strong>( <code>!</code> )是用来展开和访问可选变量 <code>john</code> 和 <code>unit4A</code> 里的实例的，所以这些实例的属性可以设置：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">john!.apartment = unit4A</div><div class="line">unit4A!.tenant = john</div></pre></td></tr></table></figure>
+<p>在将两个实例联系在一起之后，强引用的关系如图所示：<br><img style="margin: auto" src="/2017/12/06/Swift-automatic-reference-counting/referenceCycle02_2x.png" alt="referenceCycle02_2x" title="强引用关系图"></p>
+<p>不幸的是，这两个实例关联后会产生一个循环强引用。 <code>Person</code> 实例现在有了一个指向 <code>Apartment</code> 实例的强引用，而 <code>Apartment</code> 实例也有了一个指向 <code>Person</code> 实例的强引用。因此，当你断开 <code>john</code> 和 <code>unit4A</code> 变量所持有的强引用时，引用计数并不会降零，实例也不会被 <code>ARC</code> 释放：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">john = <span class="literal">nil</span></div><div class="line">unit4A = <span class="literal">nil</span></div></pre></td></tr></table></figure>
+<p>注意，当你把这两个变量设为 <code>nil</code> 时，没有任何一个反初始化器被调用。循环强引用会一直阻止 <code>Person</code> 和 <code>Apartment</code> 类实例的释放，这就在你的应用程序中造成了内存泄漏。<br>在你将 <code>john</code> 和 <code>unit4A</code> 赋值为 <code>nil</code> 后，强引用关系如下图：<br><img style="margin: auto" src="/2017/12/06/Swift-automatic-reference-counting/referenceCycle03_2x.png" alt="referenceCycle03_2x" title="强引用环路"><br><code>Person</code> 和 <code>Apartment</code> 实例之间的强引用关系保留了下来并且不会被断开。</p>
+<h3 id="解决实例之间的循环强引用"><a href="#解决实例之间的循环强引用" class="headerlink" title="解决实例之间的循环强引用"></a>解决实例之间的循环强引用</h3><p>Swift 提供了两种办法用来解决你在使用类的属性时所遇到的循环强引用问题：<strong>弱引用（ <code>weak</code> reference ）和无主引用（ <code>unowned</code> reference )</strong>。</p>
+<p>弱引用和无主引用允许循环引用中的一个实例引用另外一个实例而不保持强引用。这样实例能够互相引用而不产生循环强引用。</p>
+<p><em>对于生命周期中会变为 <code>nil</code> 的实例使用弱引用。相反，对于初始化赋值后再也不会被赋值为 nil 的实例，使用无主引用。</em>在实例的生命周期中，当引用可能“没有值”的时候，就使用弱引用来避免循环引用。如同在无主引用中描述的那样，如果引用始终有值，则可以使用无主引用来代替。上面的 <code>Apartment</code> 例子中，在它的声明周期中，有时是”没有居民”的，因此适合使用弱引用来解决循环强引用。</p>
+<h4 id="弱引用"><a href="#弱引用" class="headerlink" title="弱引用"></a>弱引用</h4><p><em>弱引用</em>不会对其引用的实例保持强引用，因而不会阻止 ARC 释放被引用的实例。这个特性阻止了引用变为循环强引用。声明属性或者变量时，在前面加上 <code>weak</code> 关键字表明这是一个弱引用。</p>
+<p>由于弱引用不会强保持对实例的引用，所以说实例被释放了弱引用仍旧引用着这个实例也是有可能的。因此，ARC 会在被引用的实例被释放时自动地设置弱引用为 <code>nil</code> 。由于弱引用需要允许它们的值为 <code>nil</code> ，它们<strong>一定得是可选类型</strong>。</p>
+<p>你可以检查弱引用的值是否存在，就像其他可选项的值一样，并且你将永远不会遇到“野指针”。</p>
+<blockquote>
+<p>在 ARC 给弱引用设置 <code>nil</code> 时不会调用属性观察者</p>
+</blockquote>
+<p>下面的例子跟上面 <code>Person</code> 和 <code>Apartment</code> 的例子一致，但是有一个重要的区别。这次， <code>Apartment</code> 的 <code>tenant</code> 属性被声明为弱引用：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">init</span>(name: <span class="type">String</span>) &#123; <span class="keyword">self</span>.name = name &#125;</div><div class="line">    <span class="keyword">var</span> apartment: <span class="type">Apartment</span>?</div><div class="line">    <span class="keyword">deinit</span> &#123; <span class="built_in">print</span>(<span class="string">"<span class="subst">\(name)</span> is being deinitialized"</span>) &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Apartment</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> unit: <span class="type">String</span></div><div class="line">    <span class="keyword">init</span>(unit: <span class="type">String</span>) &#123; <span class="keyword">self</span>.unit = unit &#125;</div><div class="line">    <span class="keyword">weak</span> <span class="keyword">var</span> tenant: <span class="type">Person</span>?</div><div class="line">    <span class="keyword">deinit</span> &#123; <span class="built_in">print</span>(<span class="string">"Apartment <span class="subst">\(unit)</span> is being deinitialized"</span>) &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>两个变量（ <code>john</code> 和 <code>unit4A</code> ）之间的强引用和关联创建得与上次相同：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> john: <span class="type">Person</span>?</div><div class="line"><span class="keyword">var</span> unit4A: <span class="type">Apartment</span>?</div><div class="line"> </div><div class="line">john = <span class="type">Person</span>(name: <span class="string">"John Appleseed"</span>)</div><div class="line">unit4A = <span class="type">Apartment</span>(unit: <span class="string">"4A"</span>)</div><div class="line"> </div><div class="line">john!.apartment = unit4A</div><div class="line">unit4A!.tenant = john</div></pre></td></tr></table></figure>
+<p>现在，两个关联在一起的实例的引用关系如下图所示：<br><img style="margin: auto" src="/2017/12/06/Swift-automatic-reference-counting/weakReference01_2x.png" alt="weakReference01_2x" title="示例关系"><br><code>Person</code> 实例依然保持对 <code>Apartment</code> 实例的强引用，但是 <code>Apartment</code> 实例现在对 <code>Person</code> 实例是<strong>弱引用</strong>。这意味着当你断开 <code>john</code> 变量所保持的强引用时，再也没有指向 <code>Person</code> 实例的强引用了，由于再也没有指向 <code>Person</code> 实例的强引用，该实例会被释放：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">john = <span class="literal">nil</span></div><div class="line"><span class="comment">// prints "John Appleseed is being deinitialized"</span></div></pre></td></tr></table></figure>
+<p><strong>**由于再也没有强引用到 <code>Person</code> 它被释放掉了并且 <code>tenant</code> 属性被设置为 <code>nil</code></strong> ：<br><img style="margin: auto" src="/2017/12/06/Swift-automatic-reference-counting/weakReference02_2x.png" alt="weakReference02_2x" title="释放"><br>现在只剩下来自 <code>unit4A</code> 变量对 <code>Apartment</code> 实例的强引用。如果你打断这个强引用，那么 <code>Apartment</code> 实例就再也没有强引用了：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">unit4A = <span class="literal">nil</span></div><div class="line"><span class="comment">// prints "Apartment 4A is being deinitialized"</span></div></pre></td></tr></table></figure>
+<p>由于再也没有指向 <code>Apartment</code> 实例的强引用，该实例也会被释放：<br><img style="margin: auto" src="/2017/12/06/Swift-automatic-reference-counting/weakReference03_2x.png" alt="weakReference03_2x" title="全部释放"></p>
+<blockquote>
+<p>在使用垃圾回收机制的系统中，由于没有强引用的对象会在内存有压力时触发垃圾回收而被释放，<strong>弱指针有时用来实现简单的缓存机制</strong>。总之，<em>对于 ARC 来说，一旦最后的强引用被移除，值就会被释放，这样的话弱引用就不再适合这类用法了</em>。</p>
+</blockquote>
+<h4 id="无主引用"><a href="#无主引用" class="headerlink" title="无主引用"></a>无主引用</h4><p>和弱引用类似， <em>无主引用</em> 不会牢牢保持住引用的实例。但是不像弱引用，总之，无主引用假定是<strong>永远</strong>有值的。因此，无主引用总是被定义为<strong>非可选类型</strong>。你可以在声明属性或者变量时，在前面加上关键字 <code>unowned</code> 表示这是一个无主引用。</p>
+<p>由于无主引用是非可选类型，你不需要在使用它的时候将它展开。无主引用总是可以直接访问。不过 ARC 无法在实例被释放后将无主引用设为 <code>nil</code> ，因为非可选类型的变量不允许被赋值为 <code>nil</code> 。</p>
+<blockquote>
+<p>注意：<br>如果你试图在实例的被释放后访问无主引用，那么你将触发运行时错误。只有在你确保引用会一直引用实例的时候才使用无主引用。</p>
+<p>还要注意的是，如果你试图访问引用的实例已经被释放了的无主引用，Swift 会确保程序直接崩溃。你不会因此而遭遇无法预期的行为。所以你应当避免这样的事情发生。</p>
+</blockquote>
+<p>下面的例子定义了两个类， <code>Customer</code> 和 <code>CreditCard</code> ，模拟了银行客户和客户的信用卡。这两个类中，每一个都将另外一个类的实例作为自身的属性。这种关系可能会造成循环强引用。</p>
+<p><code>Customer</code> 和 <code>CreditCard</code> 之间的关系与前面弱引用例子中 <code>Apartment</code> 和 <code>Person</code> 的关系略微不同。在这个数据模型中，一个客户可能有或者没有信用卡，但是一张信用卡总是关联着一个客户。为了表示这种关系， <code>Customer</code> 类有一个可选类型的 <code>card</code> 属性，但是 <code>CreditCard</code> 类有一个非可选类型的 <code>customer</code> 属性。</p>
+<p>另外，新的 <code>CreditCard</code> 实例只有通过传送 <code>number</code> 值和一个 <code>customer</code> 实例到 <code>CreditCard</code> 的初始化器才能创建。这就确保了 <code>CreditCard</code> 实例在创建时总是有与之关联的 <code>customer</code> 实例。</p>
+<p>由于信用卡总是关联着一个客户，因此将 <code>customer</code> 属性定义为<em>无主引用</em>，以避免循环强引用：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">var</span> card: <span class="type">CreditCard</span>?</div><div class="line">    <span class="keyword">init</span>(name: <span class="type">String</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.name = name</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">deinit</span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"<span class="subst">\(name)</span> is being deinitialized"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreditCard</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> number: <span class="type">UInt64</span></div><div class="line">    <span class="keyword">unowned</span> <span class="keyword">let</span> customer: <span class="type">Customer</span></div><div class="line">    <span class="keyword">init</span>(number: <span class="type">UInt64</span>, customer: <span class="type">Customer</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.number = number</div><div class="line">        <span class="keyword">self</span>.customer = customer</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">deinit</span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"Card #<span class="subst">\(number)</span> is being deinitialized"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下面的代码片段定义了一个叫 <code>john</code> 的可选 <code>Customer</code> 变量，用来保存某个特定客户的引用。由于是可选项，所以变量被初始化为 <code>nil</code> 。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> john: <span class="type">Customer</span>?</div></pre></td></tr></table></figure>
+<p>现在你可以创建一个 <code>Customer</code> 实例，用它初始化和分配一个新的 <code>CreditCard</code> 实例作为 <code>customer</code> 的 <code>card</code> 属性：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">john = <span class="type">Customer</span>(name: <span class="string">"John Appleseed"</span>)</div><div class="line">john!.card = <span class="type">CreditCard</span>(number: <span class="number">1234_5678_9012_3456</span>， customer: john!)</div></pre></td></tr></table></figure>
+<p>如下图，是你关联了两个实例后的图示关系:<br><img style="margin: auto" src="/2017/12/06/Swift-automatic-reference-counting/unownedReference01_2x.png" alt="unownedReference01_2x" title="关联图"><br>现在 <code>Customer</code> 实例对 <code>CreditCard</code> 实例有一个强引用，并且 <code>CreditCard</code> 实例对 <code>Customer</code> 实例有一个无主引用。</p>
+<p>由于 <code>Customer</code> 的无主引用，当你断开 <code>john</code> 变量持有的强引用时，那么就再也没有指向 <code>Customer</code> 实例的强引用了。<br><img style="margin: auto" src="/2017/12/06/Swift-automatic-reference-counting/unownedReference02_2x.png" alt="unownedReference02_2x" title="断开John的强引用"><br>因为不再有 <code>Customer</code> 的强引用，该实例被释放了。其后，再也没有指向 <code>CreditCard</code> 实例的强引用，该实例也随之被释放了：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">john = <span class="literal">nil</span></div><div class="line"><span class="comment">// prints "John Appleseed is being deinitialized"</span></div><div class="line"><span class="comment">// prints "Card #1234567890123456 is being deinitialized"</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>上边的例子展示了如何使用安全无主引用。Swift 还为你需要关闭运行时安全检查的情况提供了不安全无主引用——举例来说，性能优化的时候。对于所有的不安全操作，你要自己负责检查代码安全性。</p>
+<p>使用 <code>unowned(unsafe)</code> 来明确使用了一个不安全无主引用。如果你在实例的引用被释放后访问这个不安全无主引用，你的程序就会尝试访问这个实例曾今存在过的内存地址，这就是不安全操作。</p>
+</blockquote>
+<h4 id="无主引用和隐式展开的可选属性"><a href="#无主引用和隐式展开的可选属性" class="headerlink" title="无主引用和隐式展开的可选属性"></a>无主引用和隐式展开的可选属性</h4><p>上面弱引用和无主引用例子涵盖了两种常用的需要打破循环强引用的场景。</p>
+<p><code>Person</code> 和 <code>Apartment</code> 的例子展示了两个属性的值都允许为 <code>nil</code> ，并会潜在的产生循环强引用。<strong>这种场景最适合用弱引用来解决</strong>。</p>
+<p><code>Customer</code> 和 <code>CreditCard</code> 的例子展示了一个属性的值允许为 <code>nil</code> ，而另一个属性的值不允许为 <code>nil</code> ，这也可能导致循环强引用。<strong>这种场景最好使用无主引用来解决</strong>。</p>
+<p>总之， 还有第三种场景，在这种场景中，两个属性都必须有值，并且初始化完成后永远不会为 <code>nil</code> 。在这种场景中，<strong>需要一个类使用无主属性，而另外一个类使用隐式展开的可选属性</strong>。<br>一旦初始化完成，这两个属性能被直接访问(不需要可选展开)，同时避免了循环引用。这一节将为你展示如何建立这种关系。</p>
+<p>下面的例子定义了两个类， <code>Country</code> 和 <code>City</code> ，每个类将另外一个类的实例保存为属性。在这个数据模型中，每个国家必须有首都，每个城市必须属于一个国家。为了实现这种关系， <code>Country</code> 类拥有一个 <code>capitalCity</code> 属性，而 <code>City</code> 类有一个 <code>country</code> 属性：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Country</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">var</span> capiitalCity: <span class="type">City</span>!</div><div class="line">    <span class="keyword">init</span>(name: <span class="type">String</span>, capitalName: <span class="type">String</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.name = name</div><div class="line">        <span class="keyword">self</span>.capiitalCity = <span class="type">City</span>(name: capitalName, country: <span class="keyword">self</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">City</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">unowned</span> <span class="keyword">let</span> country: <span class="type">Country</span></div><div class="line">    <span class="keyword">init</span>(name: <span class="type">String</span>, country: <span class="type">Country</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.name = name</div><div class="line">        <span class="keyword">self</span>.country = country</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>为了建立两个类的依赖关系， <code>City</code> 的初始化器接收一个 <code>Country</code> 实例，并且将实例保存到 <code>country</code> 属性。</p>
+<p><code>Country</code> 的初始化器调用了 <code>City</code> 的初始化器。总之，如同在两段式初始化中描述的那样，只有 <code>Country</code> 的实例完全初始化完后， <code>Country</code> 的初始化器才能把 <code>self</code> 传给 <code>City</code> 的初始化器。</p>
+<p>为了满足这种需求，通过在类型结尾处加上感叹号（<code>City!</code> ）的方式，以声明 <code>Country</code> 的 <code>capitalCity</code> 属性为一个隐式展开的可选属性。如同在隐式展开可选项中描述的那样，这意味着像其他可选项一样， <strong><code>capitalCity</code> 属性有一个默认值 <code>nil</code></strong> ，但是不需要展开它的值就能访问它。</p>
+<p>由于 <code>capitalCity</code> 默认值为 <code>nil</code> ，一旦 <code>Country</code> 的实例在初始化器中给 <code>name</code> 属性赋值后，整个初始化过程就完成了。这意味着一旦 <code>name</code> 属性被赋值后， <code>Country</code> 的初始化器就能引用并传递隐式的 <code>self</code> 。 <code>Country</code> 的初始化器在赋值 <code>capitalCity</code> 时，就能将 <code>self</code> 作为参数传递给 <code>City</code> 的初始化器。</p>
+<p>以上的意义在于你可以通过一条语句同时创建 <code>Country</code> 和 <code>City</code> 的实例，而不产生循环强引用，并且 <code>capitalCity</code> 的属性能被直接访问，而不需要通过感叹号来展开它的可选值：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> country = <span class="type">Country</span>(name: <span class="string">"China"</span>, capitalName: <span class="string">"Beijing"</span>)</div><div class="line"><span class="built_in">print</span>(<span class="string">"<span class="subst">\(country.name)</span>`s capital city is called <span class="subst">\(country.capiitalCity.name)</span>"</span>)</div><div class="line"><span class="comment">// prints "China`s capital city is called Beijing"</span></div></pre></td></tr></table></figure>
+<p>在上面的例子中，使用隐式展开的可选属性的意义在于满足了两段式类初始化器的需求。 <code>capitalCity</code> 属性在初始化完成后，就能像非可选项一样使用和存取同时还避免了循环强引用。</p>
+<h3 id="闭包的循环强引用"><a href="#闭包的循环强引用" class="headerlink" title="闭包的循环强引用"></a>闭包的循环强引用</h3><p>上面我们看到了循环强引用是如何在两个实例属性互相保持对方的强引用时产生的，还知道了如何用弱引用和无主引用来打破这些循环强引用。</p>
+<p>循环强引用还会出现在你把一个闭包分配给类实例属性的时候，并且这个闭包中又捕获了这个实例。捕获可能发生于这个闭包函数体中访问了实例的某个属性，比如 <code>self.someProperty</code> ，或者这个闭包调用了一个实例的方法，例如 <code>self.someMethod()</code> 。这两种情况都导致了闭包 “捕获”了  <code>self</code> ，从而产生了循环强引用。</p>
+<p>循环强引用的产生，是因为<em>闭包和类相似</em>，都是<strong>引用类型</strong>。当你把闭包赋值给了一个属性，你实际上是把一个引用赋值给了这个闭包。实质上，这跟之前上面的问题是一样的——<em>两个强引用让彼此一直有效</em>。总之，和两个类实例不同，这次一个是类实例和一个闭包互相引用。</p>
+<p>Swift 提供了一种优雅的方法来解决这个问题，称之为<strong>闭包捕获列表（ closuer capture list ）</strong>。不过，在学习如何用闭包捕获列表打破循环强引用之前，我们还是先来了解一下这个循环强引用是如何产生的，这对我们很有帮助。</p>
+<p>下面的例子为你展示了当一个闭包引用了 <code>self</code> 后是如何产生一个循环强引用的。例子中定义了一个叫 <code>HTMLElement</code> 的类，用一种简单的模型表示 <code>HTML</code> 中的一个单独的元素：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HTMLElement</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">let</span> text: <span class="type">String</span>?</div><div class="line">    </div><div class="line">    <span class="built_in">lazy</span> <span class="keyword">var</span> asHTML: () -&gt; <span class="type">String</span> = &#123;</div><div class="line">        <span class="keyword">if</span> <span class="keyword">let</span> text = <span class="keyword">self</span>.text &#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">"&lt;<span class="subst">\(<span class="keyword">self</span>.name)</span>&gt;<span class="subst">\(text)</span>&lt;/<span class="subst">\(<span class="keyword">self</span>.name)</span>&gt;"</span></div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">"&lt;<span class="subst">\(<span class="keyword">self</span>.name)</span>&gt;"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">init</span>(name: <span class="type">String</span>, text: <span class="type">String</span>? = <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.name = name</div><div class="line">        <span class="keyword">self</span>.text = text</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">deinit</span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"<span class="subst">\(name)</span> is being deinitiallized"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>HTMLElement</code> 类定义了一个 <code>name</code> 属性来表示这个元素的名称，例如表示标题元素的 “h1” 、代表段落元素的 “p” 、或者代表换行元素的 “br” 。 <code>HTMLElement</code> 还定义了一个可选的属性 <code>text</code> ，它可以用来设置和展现 HTML  元素的文本。</p>
+<p>除了上面的两个属性， <code>HTMLElement</code> 还定义了一个 <code>lazy</code> 属性 <code>asHTML</code> 。这个属性引用了一个将 <code>name</code> 和 <code>text</code> 组合成 HTML  字符串片段的闭包。该属性是 <code>Void -&gt; String</code> 类型，或者可以理解为“一个没有参数，但返回 <code>String</code> 的函数”。</p>
+<p>默认情况下，闭包赋值给了 <code>asHTML</code> 属性，这个闭包返回一个代表 HTML 标签的字符串。如果 <code>text</code> 值存在，该标签就包含可选值 <code>text</code> ；如果 <code>text</code> 不存在，该标签就不包含文本。对于段落元素，根据 <code>text</code> 是 “some text” 还是 <code>nil</code> ，闭包会返回 <code>&quot;&lt;p&gt;some text&lt;/p&gt;&quot; 或者 &quot;&lt;p /&gt;&quot;</code> 。</p>
+<p>可以像实例方法那样去命名、使用 <code>asHTML</code> 属性。总之，由于 <code>asHTML</code> 是闭包而不是实例方法，如果你想改变特定元素的 HTML 处理的话，可以用自定义的闭包来取代默认值。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> heading = <span class="type">HTMLElement</span>(name: <span class="string">"h1"</span>)</div><div class="line"><span class="keyword">let</span> defaultText = <span class="string">"some default text"</span></div><div class="line">heading.asHTML = &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"&lt;<span class="subst">\(heading.name)</span>&gt;<span class="subst">\(heading.text ?? defaultText)</span>&lt;/<span class="subst">\(heading.name)</span>&gt;"</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">print</span>(heading.asHTML())</div><div class="line"><span class="comment">// prints "&lt;h1&gt;some default text&lt;/h1&gt;"</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:<br> 声明为 lazy 属性，因为只有当元素确实需要处理为 HTML 输出的字符串时，才需要使用 asHTML 。实际上 asHTML 是延迟加载属性意味着你在默认的闭包中可以使用 self ，因为只有当初始化完成以及 self 确实存在后，才能访问延迟加载属性。</p>
+</blockquote>
+<p><code>HTMLElement</code> 类只提供一个初始化器，通过 <code>name</code> 和 <code>text</code> （如果有的话）参数来初始化一个元素。该类也定义了一个初始化器，当 <code>HTMLElement</code> 实例被释放时打印一条消息。</p>
+<p>下面的代码展示了如何用 <code>HTMLElement</code> 类创建实例并打印消息。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> paragraph: <span class="type">HTMLElement</span>? = <span class="type">HTMLElement</span>(name: <span class="string">"p"</span>, text: <span class="string">"hello, world"</span>)</div><div class="line"><span class="built_in">print</span>(paragraph!.asHTML())</div><div class="line"><span class="comment">// prints"hello, world"</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>上面的 <code>paragraph</code> 变量定义为可选 <code>HTMLElement</code> ，因此我们接下来可以赋值 <code>nil</code> 给它来演示循环强引用。</p>
+</blockquote>
+<p>不幸的是，上面写的 <code>HTMLElement</code> 类产生了类实例和 <code>asHTML</code> 默认值的闭包之间的循环强引用。循环强引用如下图所示：<br><img style="margin: auto" src="/2017/12/06/Swift-automatic-reference-counting/closureReferenceCycle01_2x.png" alt="closureReferenceCycle01_2x" title="闭包的强引用关系图"><br>实例的 <code>asHTML</code> 属性持有闭包的强引用。但是，闭包在其闭包体内使用了 <code>self</code> （引用了 <code>self.name</code> 和 <code>self.text</code> ），因此闭包捕获了 <code>self</code> ，这意味着闭包又反过来持有了 <code>HTMLElement</code> 实例的强引用。这样两个对象就产生了循环强引用。</p>
+<blockquote>
+<p>尽管闭包多次引用了 <code>self</code> ，它只捕获 <code>HTMLElement</code> 实例的一个强引用。</p>
+</blockquote>
+<p>如果设置 <code>paragraph</code> 变量为 <code>nil</code> ，打破它持有的 <code>HTMLElement</code> 实例的强引用， <code>HTMLElement</code> 实例和它的闭包都不会被释放，也是因为循环强引用：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">paragraph = <span class="literal">nil</span></div></pre></td></tr></table></figure>
+<p>注意 <code>HTMLElement</code> 的反初始化器中的消息并没有被打印，证明了 <code>HTMLElement</code> 实例并没有被销毁。</p>
+<h3 id="解决闭包的循环强引用"><a href="#解决闭包的循环强引用" class="headerlink" title="解决闭包的循环强引用"></a>解决闭包的循环强引用</h3><p>你可以通过定义捕获列表作为闭包的定义来解决在闭包和类实例之间的循环强引用。捕获列表定义了当在闭包体里捕获一个或多个引用类型的规则。正如在两个类实例之间的循环强引用，声明每个捕获的引用为弱引用或无主引用而不是强引用。应当根据代码关系来决定使用弱引用还是无主引用。</p>
+<blockquote>
+<p>注意：Swift 要求你在闭包中引用self成员时使用 self.someProperty 或者 self.someMethod （而不只是 someProperty 或 someMethod ）。这有助于提醒你可能会一不小心就捕获了 self 。</p>
+</blockquote>
+<h4 id="定义捕获列表"><a href="#定义捕获列表" class="headerlink" title="定义捕获列表"></a>定义捕获列表</h4><p>捕获列表中的每一项都由 <code>weak</code> 或 <code>unowned</code> 关键字与类实例的引用（如 <code>self</code> ）或初始化过的变量（如<code>delegate = self.delegate!</code> ）成对组成。<em>这些项写在方括号中用逗号分开</em>。</p>
+<p>把捕获列表放在形式参数和返回类型前边，如果它们存在的话：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> someClosure: (<span class="type">Int</span>, <span class="type">String</span>) -&gt; <span class="type">String</span> = &#123;</div><div class="line">   [<span class="keyword">unowned</span> <span class="keyword">self</span>, <span class="keyword">weak</span> delegate = <span class="keyword">self</span>.delegate!] <span class="keyword">in</span></div><div class="line">    <span class="comment">//closure body goes here</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果闭包没有指明形式参数列表或者返回类型，是因为它们会通过上下文推断，那么就把捕获列表放在关键字 <code>in</code> 前边，闭包最开始的地方：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> someClosure: () -&gt; <span class="type">String</span> = &#123;</div><div class="line">    [<span class="keyword">unowned</span> <span class="keyword">self</span>, <span class="keyword">weak</span> delegate = <span class="keyword">self</span>.delegate!] <span class="keyword">in</span></div><div class="line">    <span class="comment">// closure body goes here</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="弱引用和无主引用"><a href="#弱引用和无主引用" class="headerlink" title="弱引用和无主引用"></a>弱引用和无主引用</h4><p><em>在闭包和捕获的实例总是互相引用并且总是同时释放时，将闭包内的捕获定义为无主引用。</em></p>
+<p>相反，<em>在被捕获的引用可能会变为 <code>nil</code> 时，定义一个弱引用的捕获</em>。 <em>弱引用总是可选项</em> ，当实例的引用释放时会自动变为 <code>nil</code> 。这使我们可以在闭包体内检查它们是否存在。</p>
+<blockquote>
+<p>如果被捕获的引用永远不会变为 <code>nil</code> ，应该用无主引用而不是弱引用。</p>
+</blockquote>
+<p>前面的 <code>HTMLElement</code> 例子中，无主引用是正确的解决循环强引用的方法。这样编写 <code>HTMLElement</code> 类来避免循环强引用：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HTMLElement</span> </span>&#123;</div><div class="line">    <span class="keyword">let</span> name: <span class="type">String</span></div><div class="line">    <span class="keyword">let</span> text: <span class="type">String</span>?</div><div class="line">    </div><div class="line">    <span class="built_in">lazy</span> <span class="keyword">var</span> asHTML: () -&gt; <span class="type">String</span> = &#123;</div><div class="line">        [<span class="keyword">unowned</span> <span class="keyword">self</span>] <span class="keyword">in</span></div><div class="line">        <span class="keyword">if</span> <span class="keyword">let</span> text = <span class="keyword">self</span>.text &#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">"&lt;<span class="subst">\(<span class="keyword">self</span>.name)</span>&gt;<span class="subst">\(text)</span>&lt;/<span class="subst">\(<span class="keyword">self</span>.name)</span>&gt;"</span></div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">"&lt;<span class="subst">\(<span class="keyword">self</span>.name)</span>&gt;"</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">init</span>(name: <span class="type">String</span>, text: <span class="type">String</span>? = <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.name = name</div><div class="line">        <span class="keyword">self</span>.text = text</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">deinit</span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"<span class="subst">\(name)</span> is being deinitiallized"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的 <code>HTMLElement</code> 实现和之前的实现一致，除了在 <code>asHTML</code> 闭包中多了一个捕获列表。这里，捕获列表是 <code>[unowned self]</code> ，表示“用无主引用而不是强引用来捕获 <code>self</code> ”</p>
+<p>和之前一样，我们可以创建并打印 <code>HTMLElement</code> 实例：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> paragraph: <span class="type">HTMLElement</span>? = <span class="type">HTMLElement</span>(name: <span class="string">"p"</span>, text: <span class="string">"hello, world"</span>)</div><div class="line"><span class="built_in">print</span>(paragraph!.asHTML())</div><div class="line"><span class="comment">// prints "&lt;p&gt;hello, world&lt;/p&gt;"</span></div></pre></td></tr></table></figure>
+<p>使用捕获列表后引用关系如下图所示:<br><img style="margin: auto" src="/2017/12/06/Swift-automatic-reference-counting/closureReferenceCycle02_2x.png" alt="closureReferenceCycle02_2x" title="无主引用闭包"><br>这次，闭包以无主引用的形式捕获 <code>self</code> ，并不会持有 <code>HTMLElement</code> 实例的强引用。如果将 <code>paragraph</code> 赋值为 <code>nil</code> ， <code>HTMLElement</code> 实例将会被释放，并能看到它的反初始化器打印出的消息。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">paragraph = <span class="literal">nil</span></div><div class="line"><span class="comment">// prints "p is being deinitialized"</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>摘自：<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0" target="_blank" rel="external">Swift 官网</a><br>所有代码在Xcode9 Swift4 环境编译没问题，代码<a href="https://github.com/keshiim/LearnSwift4" target="_blank" rel="external">戳这里 https://github.com/keshiim/LearnSwift4</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Zheng keshiim WeChat Pay"/>
+        <p>WeChat Pay(微信)</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Zheng keshiim Alipay"/>
+        <p>Alipay(支付宝)</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zheng keshiim
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/" title="Swift：自动引用计数">https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/05/Swift-deinitialization/" rel="next" title="Swift：反初始化">
+                <i class="fa fa-chevron-left"></i> Swift：反初始化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/06/Leetcode-674-Longest-Continuous-Increasing/" rel="prev" title="Leetcode-674 Longest Continuous Increasing">
+                Leetcode-674 Longest Continuous Increasing <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Zheng keshiim" />
+          <p class="site-author-name" itemprop="name">Zheng keshiim</p>
+           
+              <p class="site-description motion-element" itemprop="description">一个☝程序猿的播种天地</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keshiim" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Jasonzhengkeshi" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1997859257" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jason-zheng-17/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      知乎
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ARC的工作机制"><span class="nav-number">1.</span> <span class="nav-text">ARC的工作机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARC"><span class="nav-number">2.</span> <span class="nav-text">ARC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类实例之间的循环强引用"><span class="nav-number">3.</span> <span class="nav-text">类实例之间的循环强引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决实例之间的循环强引用"><span class="nav-number">4.</span> <span class="nav-text">解决实例之间的循环强引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#弱引用"><span class="nav-number">4.1.</span> <span class="nav-text">弱引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无主引用"><span class="nav-number">4.2.</span> <span class="nav-text">无主引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无主引用和隐式展开的可选属性"><span class="nav-number">4.3.</span> <span class="nav-text">无主引用和隐式展开的可选属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#闭包的循环强引用"><span class="nav-number">5.</span> <span class="nav-text">闭包的循环强引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决闭包的循环强引用"><span class="nav-number">6.</span> <span class="nav-text">解决闭包的循环强引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义捕获列表"><span class="nav-number">6.1.</span> <span class="nav-text">定义捕获列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#弱引用和无主引用"><span class="nav-number">6.2.</span> <span class="nav-text">弱引用和无主引用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zheng keshiim</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://keshiim.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://keshiim.github.io/2017/12/06/Swift-automatic-reference-counting/';
+          this.page.identifier = '2017/12/06/Swift-automatic-reference-counting/';
+          this.page.title = 'Swift：自动引用计数';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://keshiim.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("II40xJrcdEwAMUcs8t0GQCM7-gzGzoHsz", "6u6FB7dghxObIE4zhaUKCYoF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

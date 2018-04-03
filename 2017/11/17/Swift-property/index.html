@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Swift," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Farmer, keshiim 播种太阳🌞" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="属性可以将值与特定的类、结构体或者是枚举联系起来。存储属性 会存储 常量或变量 作为实例的一部分，反之计算属性会计算（而不是存储）值。计算属性 可以由类、结构体和枚举定义。存储属性只能由类和结构体定义。 通常存储属性和计算属性通常和特定类型的实例相关联。总之，属性也可以与类型本身相关联。这种属性就是所谓的类型属性。 另外，你也可以定义属性观察器来检查属性中值的变化，这样你就可以用自定义的行为来响应">
+<meta name="keywords" content="Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift：属性">
+<meta property="og:url" content="https://keshiim.github.io/2017/11/17/Swift-property/index.html">
+<meta property="og:site_name" content="Farmer, keshiim 播种太阳🌞">
+<meta property="og:description" content="属性可以将值与特定的类、结构体或者是枚举联系起来。存储属性 会存储 常量或变量 作为实例的一部分，反之计算属性会计算（而不是存储）值。计算属性 可以由类、结构体和枚举定义。存储属性只能由类和结构体定义。 通常存储属性和计算属性通常和特定类型的实例相关联。总之，属性也可以与类型本身相关联。这种属性就是所谓的类型属性。 另外，你也可以定义属性观察器来检查属性中值的变化，这样你就可以用自定义的行为来响应">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://keshiim.github.io/2017/11/17/Swift-property/computedProperties_2x-1.png">
+<meta property="og:image" content="https://keshiim.github.io/2017/11/17/Swift-property/staticPropertiesVUMeter_2x.png">
+<meta property="og:updated_time" content="2018-03-20T09:56:53.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift：属性">
+<meta name="twitter:description" content="属性可以将值与特定的类、结构体或者是枚举联系起来。存储属性 会存储 常量或变量 作为实例的一部分，反之计算属性会计算（而不是存储）值。计算属性 可以由类、结构体和枚举定义。存储属性只能由类和结构体定义。 通常存储属性和计算属性通常和特定类型的实例相关联。总之，属性也可以与类型本身相关联。这种属性就是所谓的类型属性。 另外，你也可以定义属性观察器来检查属性中值的变化，这样你就可以用自定义的行为来响应">
+<meta name="twitter:image" content="https://keshiim.github.io/2017/11/17/Swift-property/computedProperties_2x-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://keshiim.github.io/2017/11/17/Swift-property/"/>
+
+
+
+
+
+  <title>Swift：属性 | Farmer, keshiim 播种太阳🌞</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?921c9b00f7bef5665a875398ea470185";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Farmer, keshiim 播种太阳🌞</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">小n快乐成长🍉</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://keshiim.github.io/2017/11/17/Swift-property/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zheng keshiim">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Farmer, keshiim 播种太阳🌞">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift：属性</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-17T18:20:00+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/17/Swift-property/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/17/Swift-property/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/11/17/Swift-property/" class="leancloud_visitors" data-flag-title="Swift：属性">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>属性</strong>可以将值与特定的类、结构体或者是枚举联系起来。<em>存储属性</em> 会存储 <em>常量或变量</em> 作为实例的一部分，反之<em>计算属性</em>会计算（而不是存储）值。<strong>计算属性</strong> <em>可以由类、结构体和枚举定义</em>。<br><del>存储属性只能由类和结构体定义</del>。</p>
+<p>通常存储属性和计算属性通常和特定类型的<strong>实例相关联</strong>。总之，属性也可以与<strong>类型本身</strong>相关联。这种属性就是所谓的<strong>类型属性</strong>。</p>
+<p>另外，你也<em>可以定义属性观察器来检查属性中值的变化</em>，这样你就可以用自定义的行为来响应。<strong>属性观察器</strong>可以被添加到你自己定义的存储属性中，也可以添加到子类从他的父类那里所继承来的属性中。</p>
+<h3 id="存储属性"><a href="#存储属性" class="headerlink" title="存储属性"></a>存储属性</h3><p>在其最简单的形式下，<em>存储属性</em>是一个作为特定类和结构体实例一部分的<em>常量或变量</em>。存储属性要么是<em>变量</em>存储属性（由 <code>var</code>  关键字引入）要么是<em>常量</em>存储属性（由 let  关键字引入）。</p>
+<p>你可以为存储属性提供一个默认值作为它定义的一部分。你也可以在初始化的过程中设置和修改存储属性的初始值。正如在初始化中分配常量属性所述，这一点对于<strong>常量存储属性</strong>也成立。</p>
+<p>下面的例子定义了一个名为 <code>FixedLengthRange</code> 的结构体，它描述了一个一旦被创建长度就不能改变的整型值域：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">FixedLengthRange</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> firstValue: <span class="type">Int</span></div><div class="line">    <span class="keyword">let</span> length: <span class="type">Int</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> rangeOfThreeItems = <span class="type">FixedLengthRange</span>(firstValue: <span class="number">0</span>, length: <span class="number">3</span>)</div><div class="line"><span class="comment">// the range represents integer values 0, 1, and 2</span></div><div class="line">rangeOfThreeItems.firstValue = <span class="number">6</span></div><div class="line"><span class="comment">// the range now represents integer values 6, 7, and 8</span></div></pre></td></tr></table></figure>
+<p><code>FixedLengthRange</code> 的实例有一个名为 <code>firstValue</code> 的变量存储属性和一个名为 <code>length</code> 的常量存储属性。在上面的例子中，当新的值域创建时 <code>length</code> 已经被<strong>创建并且不能再修改</strong>，因为这是一个<em>常量属性</em>。</p>
+<h4 id="常量结构体实例的存储属性"><a href="#常量结构体实例的存储属性" class="headerlink" title="常量结构体实例的存储属性"></a>常量结构体实例的存储属性</h4><p>当你创建了一个结构体的实例并且把这个<em>实例赋给常量</em>，你不能修改这个实例的<em>属性</em>， <em>即使是声明为变量的属性：</em></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> rangeOfFourItems = <span class="type">FixedLengthRange</span>(firstValue: <span class="number">0</span>, length: <span class="number">4</span>)</div><div class="line">rangeOfFourItems.firstValue = <span class="number">6</span> </div><div class="line"><span class="comment">//compile error: cannot assign to property: 'rangeOfFourItems' is a 'let' constant</span></div></pre></td></tr></table></figure>
+<p>由于 <code>rangeOfFourItems</code> 被声明为常量（用 <code>let</code> 关键字），我们不能改变其 <code>firstValue</code> 属性，即使 <code>firstValue</code> 是一个变量属性。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">"这是由于结构体是值类型。当一个值类型的实例被标记为常量时，该实例的其他属性也均为常量。"</span></div><div class="line"><span class="string">"对于类来说则不同，它是引用类型。如果你给一个常量赋值引用类型实例，你仍然可以修改那个实例的变量属性。"</span></div></pre></td></tr></table></figure>
+<h4 id="延迟存储属性"><a href="#延迟存储属性" class="headerlink" title="延迟存储属性"></a>延迟存储属性</h4><p><em>延迟存储属性</em>的初始值在其第一次使用时才进行计算。你可以通过在其声明前标注 <code>lazy</code> 修饰语来表示一个延迟存储属性。</p>
+<blockquote>
+<p>你必须把延迟存储属性声明为变量（使用 <code>var</code> 关键字），因为它的初始值可能在实例初始化完成之前无法取得。常量属性则必须在初始化完成之前有值，因此不能声明为延迟。</p>
+</blockquote>
+<p>延时属性的使用场景：一个属性的初始值可能依赖于某些外部因素，当这些外部因素的值只有在实例的初始化完成后才能得到时，延迟属性就可以发挥作用了。而当属性的初始值需要执行复杂或代价高昂的配置才能获得，你又想要在需要时才执行，延迟属性就能够派上用场了。</p>
+<p>下面这个栗子使用了一个延迟存储属性来避免复杂类不必要的初始化。这个例子定义了两个名为 <code>DataImporter</code>和 <code>DataManager</code> 的类：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataImporter</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">//DataImporter is a class to import data from an external file.</span></div><div class="line">    <span class="comment">//The class is assumed to take a non-trivial amount of time to initialize.</span></div><div class="line">    </div><div class="line">    <span class="keyword">var</span> fileName = <span class="string">"data.txt"</span></div><div class="line">    <span class="comment">// the DataImporter class would provide data importing functionality here</span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataManager</span> </span>&#123;</div><div class="line">    <span class="built_in">lazy</span> <span class="keyword">var</span> importer = <span class="type">DataImporter</span>()</div><div class="line">    <span class="keyword">var</span> data = [<span class="type">String</span>]()</div><div class="line">    <span class="comment">// the DataManager class would provide data management functionality here</span></div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="keyword">let</span> manager = <span class="type">DataManager</span>()</div><div class="line">manager.data.append(<span class="string">"Some data"</span>)</div><div class="line">manager.data.append(<span class="string">"Some more data"</span>)</div><div class="line"><span class="comment">// the DataImporter instance for the importer property has not yet been created</span></div></pre></td></tr></table></figure>
+<p>下面👇是一堆很啰嗦的业务描述：<br>类 <code>DataManager</code> 有一个名为 <code>data</code> 的存储属性，它被初始化为一个空的新 <code>String</code> 数组。尽管它的其余功能没有展示出来，还是可以知道类 <code>DataManager</code> 的目的是管理并提供访问这个 <code>String</code> 数组的方法。</p>
+<p><code>DataManager</code> 类的功能之一是<em>从文件导入数据</em>。此功能由 <code>DataImporter</code> 类提供，它假定为需要一定时间来进行初始化。这大概是因为 <code>DataImporter</code> 实例在进行初始化的时候需要打开文件并读取其内容到内存中。</p>
+<p><code>DataManager</code> 实例并不要从文件导入数据就可以管理其数据的情况是有可能发生的，所以当 <code>DataManager</code> 本身创建的时候没有必要去再创建一个新的 <code>DataImporter</code> 实例。反之，在 <code>DataImporter</code> 第一次被使用的时候再创建它才更有意义。</p>
+<p>因为它被 <code>lazy</code> 修饰符所标记，只有在 <code>importer</code> 属性第一次被访问时才会创建 <code>DataManager</code> 实例，比如当查询它的 <code>fileName</code> 属性时：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">print</span>(manager.importer.fileName)</div><div class="line"><span class="comment">// the DataImporter instance for the importer property has now been created</span></div><div class="line"><span class="comment">// prints "data.txt"</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：如果被标记为 <code>lazy</code> 修饰符的属性同时<em>被多个线程访问并且属性</em>还没有<strong>被初始化</strong>，则无法保证属性只初始化一次。</p>
+</blockquote>
+<h4 id="存储属性与实例变量"><a href="#存储属性与实例变量" class="headerlink" title="存储属性与实例变量"></a>存储属性与实例变量</h4><p>如果你有 Objective-C 的开发经验，那你应该知道在类实例里有<em>两种方法来存储值和引用</em>。另外，你还可以使用<em>实例变量</em>作为属性中所储存的值的备份存储。</p>
+<p>Swift 把这些概念都统一到了属性声明里。Swift 属性没有与之相对应的实例变量，并且属性的后备存储不能被直接访问。这避免了不同环境中对值的访问的混淆并且将属性的声明简化为一条单一的、限定的语句。所有关于<strong>属性的信息——包括它的名字，类型和内存管理特征——都作为类的定义放在了同一个地方</strong>。</p>
+<h3 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h3><p>除了存储属性，<em>类、结构体和枚举</em>也能够定义<strong>计算属性</strong>，而它实际并不存储值。相反，他们提供一个读取器和一个可选的设置器来间接得到和设置其他的属性和值。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">0.0</span>, y = <span class="number">0.0</span></div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Size</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> width = <span class="number">0.0</span>, height = <span class="number">0.0</span></div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Rect</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> origin = <span class="type">Point</span>()</div><div class="line">    <span class="keyword">var</span> size = <span class="type">Size</span>()</div><div class="line">    <span class="keyword">var</span> center: <span class="type">Point</span> &#123;</div><div class="line">        <span class="keyword">get</span> &#123;</div><div class="line">            <span class="keyword">let</span> centerX = origin.x + (size.width / <span class="number">2</span>)</div><div class="line">            <span class="keyword">let</span> centerY = origin.y + (size.height / <span class="number">2</span>)</div><div class="line">            <span class="keyword">return</span> <span class="type">Point</span>(x: centerX, y: centerY)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">set</span>(newCenter) &#123;</div><div class="line">            origin.x = newCenter.x - (size.width / <span class="number">2</span>)</div><div class="line">            origin.y = newCenter.y - (size.height / <span class="number">2</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> square = <span class="type">Rect</span>(origin: <span class="type">Point</span>(x: <span class="number">0.0</span>, y: <span class="number">0.0</span>),</div><div class="line">    size: <span class="type">Size</span>(width: <span class="number">10.0</span>, height: <span class="number">10.0</span>))</div><div class="line"><span class="keyword">let</span> initialSquareCenter = square.center</div><div class="line">square.center = <span class="type">Point</span>(x: <span class="number">15.0</span>, y: <span class="number">15.0</span>)</div><div class="line"><span class="built_in">print</span>(<span class="string">"square.origin is now at (<span class="subst">\(square.origin.x)</span>, <span class="subst">\(square.origin.y)</span>)"</span>)</div><div class="line"><span class="comment">// prints "square.origin is now at (10.0, 10.0)"</span></div></pre></td></tr></table></figure>
+<p>这个例子定义了三个结构体来处理几何图形：</p>
+<ul>
+<li><code>Point</code> 封装了一个 <code>(x,y)</code> 坐标;</li>
+<li><code>Size</code> 封装了一个 <code>width</code> 和 <code>height</code> ;</li>
+<li><code>Rect</code> 封装了一个长方形包括原点和大小。</li>
+</ul>
+<p><code>Rect</code> 结构体还提供了一个名为 <code>center</code> 的计算属性。 <code>Rect</code> 的当前中心位置由它的 <code>origin</code> 和 <code>size</code> 决定，所以你不需要把中心点作为一个明确的 <code>Point</code> 值来存储。相反， <code>Rect</code> 为名为 <code>center</code> 的计算变量定义了一个定制的读取器（ <code>getter</code> ）和设置器（ <code>setter</code> ），来允许你使用该长方形的 <code>center</code> ，就好像它是一个真正的存储属性一样。</p>
+<p>前面的例子创建了一个名为 <code>square</code> 的新 <code>Rect</code> 变量。 <code>square</code> 变量以 <code>(0,0)</code> 为中心点，宽和高为 <code>10</code> 初始化。这个方形在下面的图像中以蓝色方形区域表示。</p>
+<p>一堆啰嗦的业务blabla:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">前面的例子创建了一个名为 square 的新 Rect 变量。 square 变量以 (0,0) 为中心点，</div><div class="line">宽和高为 10 初始化。这个方形在下面的图像中以蓝色方形区域表示。</div><div class="line"></div><div class="line">square 变量的 center 属性通过点操作符（ square. center ）来访问，</div><div class="line">通过调用 center 的读取器，来得到当前的属性值。而读取器实际上是计算并返回一个新的 Point </div><div class="line">来表示这个方形区域的中心，而不是返回一个已存在的值。如上边你看到的，</div><div class="line">getter正确返回了一个值为（ 5，5 ）的中心点。</div><div class="line"></div><div class="line">然后 center 属性被赋予新值（ 15，15 ），使得该方形区域被移动到了右上方，</div><div class="line">到达下图中如黄色区域所在的新位置。设置 center 属性调用 center 的设置器方法，</div><div class="line">通过修改 origin 存储属性中 x 和 y 的值，将该正方形移动到新位置。</div></pre></td></tr></table></figure>
+<p><img style="margin: auto" src="/2017/11/17/Swift-property/computedProperties_2x-1.png" alt="computedProperties_2x-1" title="图示 Square"></p>
+<h4 id="简写设置器（setter）声明"><a href="#简写设置器（setter）声明" class="headerlink" title="简写设置器（setter）声明"></a>简写设置器（setter）声明</h4><p>如果一个计算属性的<strong>设置器</strong>没有为将要被设置的值定义一个<em>指定名字</em>，那么他将被默认命名为 <code>newValue</code> 。下面是结构体 <code>Rect</code> 的另一种写法，其中利用了简写<strong>设置器</strong>声明的特性。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">AlternativeRect</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> origin = <span class="type">Point</span>()</div><div class="line">    <span class="keyword">var</span> size = size()</div><div class="line">    <span class="keyword">var</span> center: <span class="type">Point</span> &#123;</div><div class="line">        <span class="keyword">get</span> &#123;</div><div class="line">            <span class="keyword">let</span> centerX = origin.x + (size.width / <span class="number">2</span>)</div><div class="line">            <span class="keyword">let</span> centerY = origin.y + (size.height / <span class="number">2</span>)</div><div class="line">            <span class="keyword">return</span> <span class="type">Point</span>(x: centerX, y: centerY)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">set</span> &#123;</div><div class="line">            origin.x = newValue.x - (size.width / <span class="number">2</span>)</div><div class="line">            origin.y = newValue.y - (size.height / <span class="number">2</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="只读计算属性"><a href="#只读计算属性" class="headerlink" title="只读计算属性"></a>只读计算属性</h4><p>一个有读取器但是没有设置器的计算属性就是所谓的<em>只读计算属性</em>。只读计算属性返回一个值，也可以通过点语法访问，但是不能被修改为另一个值。</p>
+<blockquote>
+<p>注意:<br>你必须用 <code>var</code> 关键字定义计算属性——<strong>包括只读计算属性</strong>——为变量属性，因为它们的值不是固定的。 <code>let</code> 关键字只用于常量属性，用于明确那些值一旦作为实例初始化就不能更改。</p>
+</blockquote>
+<p>你可以通过去掉 <code>get</code> 关键字和他的大扩号来简化只读计算属性的声明：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Cuboid</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> width = <span class="number">0.0</span>, height = <span class="number">0.0</span>, depth = <span class="number">0.0</span></div><div class="line">    <span class="keyword">var</span> volume: <span class="type">Double</span> &#123;</div><div class="line">        <span class="keyword">return</span> width * height * depth</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> fourByFiveByTwo = <span class="type">Cuboid</span>(width: <span class="number">4.0</span>, height: <span class="number">5.0</span>, depth: <span class="number">2.0</span>)</div><div class="line"><span class="built_in">print</span>(<span class="string">"the volume of fourByFiveByTwo is <span class="subst">\(fourByFiveByTwo.volume)</span>"</span>)</div><div class="line"><span class="comment">// prints "the volume of fourByFiveByTwo is 40.0"</span></div></pre></td></tr></table></figure>
+<p>这个例子定义了一个名为 <code>Cuboid</code> 的新结构体，它代表了一个有 <code>width</code> ， <code>height</code> 和 <code>depth</code> 属性的三维长方形结构。这个结构体还有一个名为 <code>volume</code> 的只读计算属性，它计算并返回长方体的当前体积。对于 <code>volume</code> 属性来说可被设置并没有意义，因为它会明确 <code>width</code> ， <code>height</code> 和 <code>depth</code> 中哪个值用在特定的 <code>volume</code> 值中，对 <code>Cuboid</code> 来说提供一个只读计算属性来让外部用户来发现它的当前计算体积就显得很有用了。</p>
+<h3 id="属性观察者"><a href="#属性观察者" class="headerlink" title="属性观察者"></a>属性观察者</h3><p>属性观察者会观察并对属性值的变化做出回应。每当一个属性的值被设置时，属性观察者都会被调用，即使这个值与该属性当前的值相同。你可以为你定义的<em>任意存储属性</em>添加属性观察者，<strong>除了延迟存储属性</strong>。</p>
+<blockquote>
+<p>你不需要为非重写的计算属性定义属性观察者，因为你可以在计算属性的设置器里直接观察和相应它们值的改变。</p>
+</blockquote>
+<p>你可以选择将这些观察者或其中之一定义在属性上：</p>
+<ul>
+<li>willSet 会在该值被存储之前被调用。</li>
+<li>didSet 会在一个新值被存储后被调用。</li>
+</ul>
+<p>如果你实现了一个 <code>willSet</code> 观察者，新的属性值会以<strong>常量形式</strong>参数传递。你可以在你的 <code>willSet</code> 实现中为这个参数定义名字。如果你没有为它命名，那么它会使用默认的名字 <code>newValue</code> 。</p>
+<p>同样，如果你实现了一个 <code>didSet</code>观察者，一个包含旧属性值的<strong>常量形式</strong>参数将会被传递。你可以为它命名，也可以使用默认的形式参数名 <code>oldValue</code> 。如果你在属性自己的 <code>didSet</code> 观察者里给自己赋值，<em>你赋值的新值就会取代刚刚设置的值</em>。</p>
+<blockquote>
+<p>注意：<br>父类属性的 <code>willSet</code> 和 <code>didSet</code> 观察者<strong>会在子类初始化器中设置时被调用</strong>。它们不会在类的父类初始化器调用中设置其自身属性时被调用。</p>
+</blockquote>
+<p>这里有一个关于 <code>willSet</code> 和 <code>didSet</code> 的使用栗子。下面的栗子定义了一个名为 <code>StepCounter</code> 的新类，它追踪人散步的总数量。这个类可能会用于从计步器或者其他计步工具导入数据来追踪人日常的锻炼情况。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">StepCounter</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> totalSteps: <span class="type">Int</span> = <span class="number">0</span> &#123;</div><div class="line">        <span class="keyword">willSet</span>(newTotalSteps) &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"About to set totalSteps to <span class="subst">\(newTotalSteps)</span>"</span>)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">didSet</span> &#123;</div><div class="line">            <span class="keyword">if</span> totalSteps &gt; oldValue  &#123;</div><div class="line">                <span class="built_in">print</span>(<span class="string">"Added <span class="subst">\(totalSteps - oldValue)</span> steps"</span>)</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> stepCounter = <span class="type">StepCounter</span>()</div><div class="line">stepCounter.totalSteps = <span class="number">200</span></div><div class="line"><span class="comment">// About to set totalSteps to 200</span></div><div class="line"><span class="comment">// Added 200 steps</span></div><div class="line">stepCounter.totalSteps = <span class="number">360</span></div><div class="line"><span class="comment">// About to set totalSteps to 360</span></div><div class="line"><span class="comment">// Added 160 steps</span></div><div class="line">stepCounter.totalSteps = <span class="number">896</span></div><div class="line"><span class="comment">// About to set totalSteps to 896</span></div><div class="line"><span class="comment">// Added 536 steps</span></div></pre></td></tr></table></figure>
+<p><code>StepCounter</code> 类声明了一个 <code>Int</code> 类型的 <code>totalSteps</code> 属性。这是一个包含了 <code>willSet</code> 和 <code>didSet</code> 观察者的储存属性。<code>totalSteps</code> 的 <code>willSet</code> 和 <code>didSet</code> 观察者会在每次属性被赋新值的时候调用。就算新值与当前值完全相同也会如此。</p>
+<p>栗子中的 <code>willSet</code> 观察者为增量的新值使用自定义的形式参数名 <code>newTotalSteps</code> ，它只是简单的打印出将要设置的值。</p>
+<p><code>didSet</code> 观察者在 <code>totalSteps</code> 的值更新后调用。它用旧值对比 <code>totalSteps</code> 的新值。如果总步数增加了，就打印一条信息来表示接收了多少新的步数。 <code>didSet</code> 观察者不会提供自定义的形式参数名给旧值，而是使用 <code>oldValue</code> 这个默认的名字。</p>
+<h3 id="全局和局部变量"><a href="#全局和局部变量" class="headerlink" title="全局和局部变量"></a>全局和局部变量</h3><p>上边描述的<strong>计算属性</strong>和<strong>观察属性</strong>的能力同样对<em>全局变量和局部变量有效</em>。全局变量是定义在任何函数、方法、闭包或者类型环境之外的变量。局部变量是定义在函数、方法或者闭包环境之中的变量。</p>
+<p>你在之前章节中所遇到的全局和局部变量都是<em>存储变量</em>。存储变量，类似于存储属性，为特定类型的值提供存储并且允许这个值被设置和取回。</p>
+<p>总之，你同样可以定义计算属性以及给存储变量<em>定义观察者</em>，无论是全局还是局部环境。计算变量计算而不是存储值，并且与计算属性的写法一致。</p>
+<blockquote>
+<p>注意：<br><strong>全局常量和变量永远是延迟计算</strong>的，与延迟存储属性有着相同的行为。不同于延迟存储属性，全局常量和变量<strong>不需要标记 lazy</strong> 修饰符。</p>
+</blockquote>
+<h3 id="类型属性"><a href="#类型属性" class="headerlink" title="类型属性"></a>类型属性</h3><p>你同样可以定义属于类型本身的属性，不是这个类型的某一个实例的属性。这个属性只有一个拷贝，无论你创建了多少个类对应的实例。这样的属性叫做<strong>类型属性</strong>。</p>
+<p>类型属性在定义那些对特定类型的所有实例都通用的值的时候很有用，比如实例要使用的常量属性（类似 C 里的<strong>静态常量</strong>），或者储存对这个类型的所有实例全局可见的值的存储属性（类似 C 里的<strong>静态变量</strong>）。</p>
+<p><strong>存储类型属性可以是变量或者常量。计算类型属性总要被声明为变量属性，与计算实例属性一致。</strong></p>
+<blockquote>
+<p>不同于存储实例属性，你必须总是给存储类型属性一个默认值。这是因为类型本身不能拥有能够在初始化时给存储类型属性赋值的初始化器。</p>
+<p>存储类型属性是在它们第一次访问时延迟初始化的。它们保证只会初始化一次，就算被多个线程同时访问，他们也不需要使用 <code>lazy</code> 修饰符标记。</p>
+</blockquote>
+<h4 id="类型属性语法"><a href="#类型属性语法" class="headerlink" title="类型属性语法"></a>类型属性语法</h4><p>在 C 和  Objective-C 中，你使用全局静态变量来定义一个与类型关联的<em>静态常量和变量</em>。在 Swift 中，总之，类型属性是写在类型的定义之中的，在类型的花括号里，并且每一个类型属性都显式地放在它支持的类型范围内。</p>
+<p>使用 <code>static</code> 关键字来开一<em>类型属性</em>。 <em>对于类类型的计算类型属性，</em> 你可以使用 <code>class</code> 关键字<em>来允许子类重写父类的实现</em>。下面的栗子展示了存储和计算类型属性的语法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SomeStructure</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> storedTypeProperty = <span class="string">"Some value."</span></div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> computedTypeProperty: <span class="type">Int</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">SomeEnumeration</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> storedTypeProperty = <span class="string">"Some value."</span></div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> computedTypeProperty: <span class="type">Int</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">6</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> storedTypeProperty = <span class="string">"Some value."</span></div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> computedTypeProperty: <span class="type">Int</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">27</span></div><div class="line">    &#125;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">var</span> <span class="title">overrideableComputedTypeProperty</span>: <span class="title">Int</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">107</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="查询和设置类型属性"><a href="#查询和设置类型属性" class="headerlink" title="查询和设置类型属性"></a>查询和设置类型属性</h4><p>类型属性使用点语法来查询和设置。总之，类型属性在类里查询和设置，而不是这个类型的实例。举例来说：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">print</span>(<span class="type">SomeStructure</span>.storedTypeProperty)</div><div class="line"><span class="comment">// prints "Some value."</span></div><div class="line"><span class="type">SomeStructure</span>.storedTypeProperty = <span class="string">"Another value."</span></div><div class="line"><span class="built_in">print</span>(<span class="type">SomeStructure</span>.storedTypeProperty)</div><div class="line"><span class="comment">// prints "Another value."</span></div><div class="line"><span class="built_in">print</span>(<span class="type">SomeEnumeration</span>.computedTypeProperty)</div><div class="line"><span class="comment">// prints "6"</span></div><div class="line"><span class="built_in">print</span>(<span class="type">SomeClass</span>.computedTypeProperty)</div><div class="line"><span class="comment">// prints "27"</span></div></pre></td></tr></table></figure>
+<p>接下来的栗子使用了两个存储类型属性作为建模一个为数字音频信道音频测量表的结构体的一部分。每一个频道都有一个介于 0 到 10 之间的数字音频等级。</p>
+<p>下边的图例展示了这个音频频道如何组合建模一个立体声音频测量表。当频道的音频电平为 0，那个对应频道的灯就不会亮。当电平是 10 ，所有这个频道的灯都会亮。在这个图例里，左声道当前电平是 9 ，右声道的当前电平是 7 ：<br><img style="margin: auto" src="/2017/11/17/Swift-property/staticPropertiesVUMeter_2x.png" alt="staticPropertiesVUMeter_2x" title="声道图例"><br>上边描述的音频声道使用 <code>AudioChannel</code> 结构体来表示：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">AudioChannel</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">let</span> thresholdLevel = <span class="number">10</span></div><div class="line">    <span class="keyword">static</span> <span class="keyword">var</span> maxInputLevelForAllChannels = <span class="number">0</span></div><div class="line">    <span class="keyword">var</span> currentLevel: <span class="type">Int</span> = <span class="number">0</span> &#123;</div><div class="line">        <span class="keyword">didSet</span> &#123;</div><div class="line">            <span class="keyword">if</span> currentLevel &gt; <span class="type">AudioChannel</span>.thresholdLevel &#123;</div><div class="line">                <span class="comment">// cap the new audio level to the threshold level</span></div><div class="line">                currentLevel = <span class="type">AudioChannel</span>.thresholdLevel</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> currentLevel &gt; <span class="type">AudioChannel</span>.maxInputLevelForAllChannels &#123;</div><div class="line">                <span class="comment">// store this as the new overall maximum input level</span></div><div class="line">                <span class="type">AudioChannel</span>.maxInputLevelForAllChannels = currentLevel</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>AudioChannel</code> 结构体定义了两个存储类型属性来支持它的功能。第一个， <code>thresholdLevel</code> ，定义了最大限度电平。它是对所有 <code>AudioChannel</code> 实例来说是一个常量值 10 。（如下方描述的那样）如果传入音频信号值大于 10 ，则只会被限定在这个限定值上。</p>
+<p>第二个类型属性是一个变量存储属性叫做 <code>maxInputLevelForAllChannels</code> 。它保持追踪任意 <code>AudioChannel</code> 实例接收到的最大输入值。它以 0 初始值开始。</p>
+<p><code>AudioChannel</code> 结构体同样定义了存储实力属性叫做 <code>currentLevel</code> ，它表示声道的当前音频电平标量从 0 到 10 。</p>
+<p><code>currentLevel</code> 属性有一个 <code>didSet</code> 属性观察者来检查每次 <code>currentLevel</code> 设定的值，这个观察者执行两个检查：</p>
+<ul>
+<li>如果 <code>currentLevel</code> 的新值比<strong>允许的限定值要大</strong>，属性观察者就限定 <code>currentLevel</code> 为 <code>thresholdLevel</code> ；</li>
+<li>如果 <code>currentLevel</code> 的新值（任何限定之后）比之前任何 <code>AudioChannel</code> 实例接收的都高，属性观察者就在 <code>maxInputLevelForAllChannels</code> 类型属性里储存 <code>currentLevel</code> 的新值。</li>
+</ul>
+<blockquote>
+<p>注意<br><strong>在这两个检查的第一个中， <code>didSet</code> 观察者设置 <code>currentLevel</code> 为不同的值。总之，它不会导致观察者的再次调用。</strong></p>
+</blockquote>
+<p>你可以使用 <code>AudioChannel</code> 结构体来创建两个新的音频声道 <code>leftChannel</code> 和 <code>rightChannel</code> ，来表示双声道系统的音频等级：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> leftChannel = <span class="type">AudioChannel</span>()</div><div class="line"><span class="keyword">var</span> rightChannel = <span class="type">AudioChannel</span>()</div></pre></td></tr></table></figure>
+<p>1.如果你设置左声道的 <code>currentLevel</code> 为 7 ，你就会看到 <code>maxInputLevelForAllChannels</code> 类型属性被更新到了 7 ：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">leftChannel.currentLevel = <span class="number">7</span></div><div class="line"><span class="built_in">print</span>(leftChannel.currentLevel)</div><div class="line"><span class="comment">// prints "7"</span></div><div class="line"><span class="built_in">print</span>(<span class="type">AudioChannel</span>.maxInputLevelForAllChannels)</div><div class="line"><span class="comment">// prints "7"</span></div><div class="line">leftChannel.currentLevel = <span class="number">7</span></div><div class="line"><span class="built_in">print</span>(leftChannel.currentLevel)</div><div class="line"><span class="comment">// prints "7"</span></div><div class="line"><span class="built_in">print</span>(<span class="type">AudioChannel</span>.maxInputLevelForAllChannels)</div><div class="line"><span class="comment">// prints "7"</span></div></pre></td></tr></table></figure>
+<p>2.如果你尝试去设置右声道的 <code>currentLevel</code> 到 11 ，你就会看到右声道的 <code>currentLevel</code> 属性被上限限制到了最大值 10 ，并且 <code>maxInputLevelForAllChannels</code> 类型属性被更新到了 10 ：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">rightChannel.currentLevel = <span class="number">11</span></div><div class="line"><span class="built_in">print</span>(rightChannel.currentLevel)</div><div class="line"><span class="comment">// prints "10"</span></div><div class="line"><span class="built_in">print</span>(<span class="type">AudioChannel</span>.maxInputLevelForAllChannels)</div><div class="line"><span class="comment">// prints "10"</span></div><div class="line">rightChannel.currentLevel = <span class="number">11</span></div><div class="line"><span class="built_in">print</span>(rightChannel.currentLevel)</div><div class="line"><span class="comment">// prints "10"</span></div><div class="line"><span class="built_in">print</span>(<span class="type">AudioChannel</span>.maxInputLevelForAllChannels)</div><div class="line"><span class="comment">// prints "10"</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>摘自：<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0" target="_blank" rel="external">swift 官网</a><br>所有代码在Xcode9 Swift4 环境编译没问题，代码<a href="https://github.com/keshiim/LearnSwift4" target="_blank" rel="external">戳这里 https://github.com/keshiim/LearnSwift4</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Zheng keshiim WeChat Pay"/>
+        <p>WeChat Pay(微信)</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Zheng keshiim Alipay"/>
+        <p>Alipay(支付宝)</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zheng keshiim
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://keshiim.github.io/2017/11/17/Swift-property/" title="Swift：属性">https://keshiim.github.io/2017/11/17/Swift-property/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/17/Shortest-Word-Distance/" rel="next" title="Leetcode-243 Shortest Word Distance">
+                <i class="fa fa-chevron-left"></i> Leetcode-243 Shortest Word Distance
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/20/Max-Area-of-Island/" rel="prev" title="Leetcode-695 Max Area of Island">
+                Leetcode-695 Max Area of Island <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Zheng keshiim" />
+          <p class="site-author-name" itemprop="name">Zheng keshiim</p>
+           
+              <p class="site-description motion-element" itemprop="description">一个☝程序猿的播种天地</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keshiim" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Jasonzhengkeshi" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1997859257" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jason-zheng-17/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      知乎
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#存储属性"><span class="nav-number">1.</span> <span class="nav-text">存储属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常量结构体实例的存储属性"><span class="nav-number">1.1.</span> <span class="nav-text">常量结构体实例的存储属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟存储属性"><span class="nav-number">1.2.</span> <span class="nav-text">延迟存储属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储属性与实例变量"><span class="nav-number">1.3.</span> <span class="nav-text">存储属性与实例变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算属性"><span class="nav-number">2.</span> <span class="nav-text">计算属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简写设置器（setter）声明"><span class="nav-number">2.1.</span> <span class="nav-text">简写设置器（setter）声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#只读计算属性"><span class="nav-number">2.2.</span> <span class="nav-text">只读计算属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性观察者"><span class="nav-number">3.</span> <span class="nav-text">属性观察者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局和局部变量"><span class="nav-number">4.</span> <span class="nav-text">全局和局部变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型属性"><span class="nav-number">5.</span> <span class="nav-text">类型属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类型属性语法"><span class="nav-number">5.1.</span> <span class="nav-text">类型属性语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询和设置类型属性"><span class="nav-number">5.2.</span> <span class="nav-text">查询和设置类型属性</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zheng keshiim</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://keshiim.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://keshiim.github.io/2017/11/17/Swift-property/';
+          this.page.identifier = '2017/11/17/Swift-property/';
+          this.page.title = 'Swift：属性';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://keshiim.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("II40xJrcdEwAMUcs8t0GQCM7-gzGzoHsz", "6u6FB7dghxObIE4zhaUKCYoF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

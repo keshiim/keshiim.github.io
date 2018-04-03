@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Swift," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Farmer, keshiim 播种太阳🌞" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="函数是一个独立的代码块，用来执行特定的任务。通过给函数一个名字来定义它的功能，并且在需要的时候，通过这个名字来“调用”函数执行它的任务。 Swift 统一的函数语法十分灵活，可以表达从简单的无形式参数的 C 风格函数到复杂的每一个形式参数都带有局部和外部形式参数名的 Objective-C 风格方法的任何内容。  形式参数能提供一个默认的值来简化函数的调用 也可以被当作输入输出形式参数被传递 它在">
+<meta name="keywords" content="Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift：函数">
+<meta property="og:url" content="https://keshiim.github.io/2017/11/10/Swift-function/index.html">
+<meta property="og:site_name" content="Farmer, keshiim 播种太阳🌞">
+<meta property="og:description" content="函数是一个独立的代码块，用来执行特定的任务。通过给函数一个名字来定义它的功能，并且在需要的时候，通过这个名字来“调用”函数执行它的任务。 Swift 统一的函数语法十分灵活，可以表达从简单的无形式参数的 C 风格函数到复杂的每一个形式参数都带有局部和外部形式参数名的 Objective-C 风格方法的任何内容。  形式参数能提供一个默认的值来简化函数的调用 也可以被当作输入输出形式参数被传递 它在">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-20T09:56:53.663Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift：函数">
+<meta name="twitter:description" content="函数是一个独立的代码块，用来执行特定的任务。通过给函数一个名字来定义它的功能，并且在需要的时候，通过这个名字来“调用”函数执行它的任务。 Swift 统一的函数语法十分灵活，可以表达从简单的无形式参数的 C 风格函数到复杂的每一个形式参数都带有局部和外部形式参数名的 Objective-C 风格方法的任何内容。  形式参数能提供一个默认的值来简化函数的调用 也可以被当作输入输出形式参数被传递 它在">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://keshiim.github.io/2017/11/10/Swift-function/"/>
+
+
+
+
+
+  <title>Swift：函数 | Farmer, keshiim 播种太阳🌞</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?921c9b00f7bef5665a875398ea470185";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Farmer, keshiim 播种太阳🌞</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">小n快乐成长🍉</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://keshiim.github.io/2017/11/10/Swift-function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zheng keshiim">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Farmer, keshiim 播种太阳🌞">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift：函数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-10T13:24:20+08:00">
+                2017-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/10/Swift-function/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/10/Swift-function/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/11/10/Swift-function/" class="leancloud_visitors" data-flag-title="Swift：函数">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>函数</strong>是一个独立的代码块，用来执行特定的任务。通过给函数一个名字来定义它的功能，并且在需要的时候，通过这个名字来“调用”函数执行它的任务。</p>
+<p>Swift 统一的函数语法十分灵活，可以表达从简单的无形式参数的 C 风格函数到复杂的每一个形式参数都带有局部和外部形式参数名的 Objective-C 风格方法的任何内容。</p>
+<ul>
+<li>形式参数能提供一个<em>默认的值</em>来简化函数的调用</li>
+<li>也可以被当作<em>输入输出形式参数被传递</em></li>
+<li>它在函数执行完成时修改传递来的变量。</li>
+</ul>
+<p>Swift中函数也是一等公民，每个函数都有类型，由函数的形式参数类型和返回类型组成。可做用作其他函数的<em>参数</em>或<em>返回值</em>，同时也可以写在其他函数内部来在<em>内嵌范围封装有用的功能</em>。</p>
+<h3 id="定义和调用函数"><a href="#定义和调用函数" class="headerlink" title="定义和调用函数"></a>定义和调用函数</h3><p>当你定义了一个函数的时候，你可以选择定义一个或者多个命名的分类的值作为<em>函数的输入</em>（<em>所谓的形式参数</em>），并且/或者定义函数完成后将要传回作为<em>输出的值的类型</em>（<em>所谓它的返回类型</em>）。</p>
+<p>每一个函数都有一个<em>函数名</em>，它描述函数执行的任务。要使用一个函数，你可以通过“调用”函数的名字并且传入一个符合<em>函数形式参数类型</em>的输入值（<em>所谓实际参数</em>）来调用这个函数。——给函数提供的实际参数的顺序必须符合函数的<em>形式参数列表顺序</em>。</p>
+<p>下边栗子🌰中的函数叫做 <code>greet(person:)</code> ，跟它的功能一致——它接收一个人的名字作为输入然后返回对这个人的问候。要完成它，你需要定义一个输入形式参数——一个叫做 person 的 <code>String</code>类型值——并且返回一个 <code>String</code> 类型，它将会包含对这个人的问候：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">greet</span><span class="params">(person: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">let</span> greeting = <span class="string">"Hello, "</span> + person + <span class="string">"!"</span></div><div class="line">    <span class="keyword">return</span> greeting</div><div class="line">&#125;</div><div class="line"><span class="built_in">print</span>(greet(person: <span class="string">"zheng"</span>))</div></pre></td></tr></table></figure>
+<p>这些信息都被包含在了函数的定义中，它使用一个 <code>func</code>的关键字前缀。你可以用一个返回箭头 <code>-&gt;</code> (一个连字符后面跟一个向右的尖括号)来明确函数<em>返回的类型</em>。<br>你可以通过在 <code>person</code> 标签后边给函数 <code>greet(person:)</code>传入一个用圆括号包裹的 <code>String</code>实际参数值来调用它，例如 <code>greet(person: &quot;Anna&quot;)</code>。</p>
+<p>为了简化这个函数的主体，我们将创建信息和返回语句组合到一行：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">greetAgain</span><span class="params">(person: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Hello again, "</span> + person + <span class="string">"!"</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">print</span>(greetAgain(person: <span class="string">"Anna"</span>))</div><div class="line"><span class="comment">// Prints "Hello again, Anna!"</span></div></pre></td></tr></table></figure>
+<h3 id="函数的形式参数和返回值"><a href="#函数的形式参数和返回值" class="headerlink" title="函数的形式参数和返回值"></a>函数的形式参数和返回值</h3><p>在 Swift 中，函数的形式参数和返回值非常灵活。你可以定义从一个简单的只有一个未命名形式参数的工具函数到那种具有形象的参数名称和不同的形式参数选项的复杂函数之间的任何函数。</p>
+<h4 id="无形式参数的函数"><a href="#无形式参数的函数" class="headerlink" title="无形式参数的函数"></a>无形式参数的函数</h4><p>函数没有要求必须输入一个参数，这里有一个没有输入形式参数的函数，无论何时它被调用永远会返回相同的 <code>String</code>信息：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">sayHelloWorld</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Hello, world"</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">print</span>(sayHelloWorld())</div></pre></td></tr></table></figure>
+<p>函数的定义仍然需要在名字后边加一<em>个圆括号</em>，即使它不接受形式参数也得这样做。当函数被调用的时候也要在函数的名字后边<em>加一个空的圆括号</em>。</p>
+<h4 id="多形式参数的函数"><a href="#多形式参数的函数" class="headerlink" title="多形式参数的函数"></a>多形式参数的函数</h4><p>函数可以输入多个形式参数，可以写在函数后边的圆括号内，用<strong>逗号分隔</strong>。</p>
+<p>这个函数以一个人的名字以及是否被问候过为输入，并返回对这个人的相应的问候：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">greetAgain</span><span class="params">(person: String)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Hello again, <span class="subst">\(person)</span>!"</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">greet</span><span class="params">(person: String, alreadyGreeted: Bool)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">if</span> alreadyGreeted &#123;</div><div class="line">        <span class="keyword">return</span> greetAgain(person: person)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> greet(person: person)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">print</span>(greet(person: <span class="string">"Tim"</span>, alreadyGreeted: <span class="literal">true</span>))</div><div class="line"><span class="comment">// Prints "Hello again, Tim!"</span></div></pre></td></tr></table></figure>
+<p>通过在圆括号中传入带有 <code>person</code> 标签的 <code>String</code>实际参数值和带有 <code>alreadyGreeted</code> 标签的 <code>Bool</code>实际参数值来调用 <code>greet(person:alreadyGreeted:)</code>这个函数，实际参数之间用<em>逗号分隔</em>。注意这个函数与之前展示的函数<code>greet(person:)</code>是明显不同的。尽管两个函数都叫做 greet ， <code>greet(person:alreadyGreeted:)</code> 接收两个实际参数但 <code>greet(person:)</code>函数只接收一个。</p>
+<h4 id="无返回值的函数"><a href="#无返回值的函数" class="headerlink" title="无返回值的函数"></a>无返回值的函数</h4><p>函数定义中没有要求必须有一个返回类型。下面是另一个版本的 <code>greet(person:)</code>函数，它将自己的 <code>String</code>值打印了出来而不是返回它：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">greet</span><span class="params">(person: String)</span></span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"Hello, <span class="subst">\(person)</span>!"</span>)</div><div class="line">&#125;</div><div class="line">greet(person: <span class="string">"Dave"</span>)</div></pre></td></tr></table></figure>
+<p>正因为它不需要返回值，函数在定义的时候就没有包含返回箭头<code>（-&gt;）</code>或者返回类型。</p>
+<blockquote>
+<p>注意：严格来讲，函数 <code>greet(person:)</code>还是有一个返回值的，尽管没有定义返回值。没有定义返回类型的函数实际上会返回一个特殊的类型 <code>Void</code>。它其实是一个空的元组，作用相当于没有元素的元组，可以写作 <code>()</code></p>
+</blockquote>
+<p>当函数被调用时，函数的返回值可以被忽略：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> <span class="number">_</span> = printAndCount(string: string)</div></pre></td></tr></table></figure>
+<h4 id="多返回值的函数"><a href="#多返回值的函数" class="headerlink" title="多返回值的函数"></a>多返回值的函数</h4><p>为了让函数返回多个值作为一个复合的返回值，你可以使用元组类型作为返回类型。</p>
+<p>下面的栗子定义了一个叫做<code>minMax(array:)</code>的函数，它可以找到类型为 <code>Int</code>的数组中最大数字和最小数字。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">minMax</span><span class="params">(array: [Int])</span></span> -&gt; (<span class="built_in">min</span>: <span class="type">Int</span>, <span class="built_in">max</span>: <span class="type">Int</span>) &#123;</div><div class="line">    <span class="keyword">var</span> currentMin = array[<span class="number">0</span>]</div><div class="line">    <span class="keyword">var</span> currentMax = array[<span class="number">0</span>]</div><div class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> array[<span class="number">1</span>..&lt;array.<span class="built_in">count</span>] &#123;</div><div class="line">        <span class="keyword">if</span> value &lt; currentMin &#123;</div><div class="line">            currentMin = value</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> value &gt; currentMax &#123;</div><div class="line">            currentMax = value</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> (currentMin, currentMax)</div><div class="line">&#125;</div><div class="line"><span class="built_in">print</span>(minMax(array: [<span class="number">1</span>, <span class="number">2</span>, -<span class="number">4</span>, <span class="number">3</span>, <span class="number">74</span>]))</div><div class="line"><span class="comment">// prints (min: -4, max: 74)</span></div></pre></td></tr></table></figure>
+<p>函数 <code>minMax(array:)</code>返回了一个包含两个 <code>Int</code>值的元组。这两个值被 <code>min</code>和 <code>max</code> 标记，这样当查询函数返回值的时候就可以通过名字访问了。</p>
+<h4 id="可选元组返回类型"><a href="#可选元组返回类型" class="headerlink" title="可选元组返回类型"></a>可选元组返回类型</h4><p>如果元组在函数的返回类型中有可能“没有值”，你可以用一个<em>可选元组返回类型</em>来说明整个元组的可能是 <code>nil</code> 。书法是在可选元组类型的圆括号后边添加一个问号<code>（?）</code>例如 <code>(Int, Int)?</code> 或者 <code>(String, Int, Bool)?</code> 。</p>
+<p>上面的函数<code>minMax(array:)</code>返回了一个包含两个 <code>Int</code>值的元组。总之，函数不会对传入的数组进行安全性检查。如果 <code>array</code>的实际参数包含了一个空的数组，上面定义的函数 <code>minMax(array:)</code>在尝试调用 <code>array[0]</code>的时候就会触发一个运行时错误。</p>
+<p>为了安全的处理这种“空数组”的情景，就需要把<code>minMax(array:)</code>函数的返回类型写做<strong>可选元组</strong>，当数组是空的时候返回一个 <code>nil</code>值：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">minMax2</span><span class="params">(array: [Int])</span></span> -&gt; (<span class="built_in">min</span>: <span class="type">Int</span>, <span class="built_in">max</span>: <span class="type">Int</span>)? &#123;</div><div class="line">    <span class="keyword">guard</span> !array.isEmpty <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">var</span> currentMin = array[<span class="number">0</span>]</div><div class="line">    <span class="keyword">var</span> currentMax = array[<span class="number">0</span>]</div><div class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> array[<span class="number">1</span>..&lt;array.<span class="built_in">count</span>] &#123;</div><div class="line">        <span class="keyword">if</span> value &lt; currentMin &#123;</div><div class="line">            currentMin = value</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> value &gt; currentMax &#123;</div><div class="line">            currentMax = value</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> (currentMin, currentMax)</div><div class="line">&#125;</div><div class="line"><span class="built_in">print</span>(minMax2(array: [<span class="number">1</span>, -<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">67</span>]) ?? <span class="string">""</span>) <span class="comment">//prints (min: -3, max: 67)</span></div><div class="line"><span class="built_in">print</span>(minMax2(array: []) ?? <span class="string">""</span>)                <span class="comment">//prints ""</span></div></pre></td></tr></table></figure>
+<h3 id="函数实际参数标签和形式参数名"><a href="#函数实际参数标签和形式参数名" class="headerlink" title="函数实际参数标签和形式参数名"></a>函数实际参数标签和形式参数名</h3><p>每一个函数的形式参数都包含实际参数标签和形式参数名。<em>实际参数标签用在调用函数的时候</em>；在调用函数的时候每一个实际参数前边都要写实际参数标签。<em>形式参数名用在函数的实现当中</em>。<strong>默认情况下，形式参数使用它们的形式参数名作为实际参数标签</strong>。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">someFunction</span><span class="params">(firstParameterName: Int, secondParameterName: Int)</span></span> &#123;</div><div class="line">    <span class="comment">// In the function body, firstParameterName and secondParameterName</span></div><div class="line">    <span class="comment">// refer to the argument values for the first and second parameters.</span></div><div class="line">&#125;</div><div class="line">someFunction(firstParameterName: <span class="number">1</span>, secondParameterName: <span class="number">2</span>)</div></pre></td></tr></table></figure>
+<p>左右的<em>形式参数</em>必须有<strong>唯一</strong>的名字。尽管有可能多个形式参数拥有相同的实际参数标签，唯一的实际参数标签有助于让你的代码更加易读。</p>
+<h4 id="指定实际参数标签"><a href="#指定实际参数标签" class="headerlink" title="指定实际参数标签"></a>指定实际参数标签</h4><p>在提供形式参数名之前写实际参数标签，用空格分隔：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">someFunction</span><span class="params">(argumentLabel parameterName: Int)</span></span> &#123;</div><div class="line">    <span class="comment">// In the function body, parameterName refers to the argument value</span></div><div class="line">    <span class="comment">// for that parameter.</span></div><div class="line">&#125;</div><div class="line">someFunction(argumentLabel: xx)</div></pre></td></tr></table></figure>
+<h4 id="省略实际参数标签"><a href="#省略实际参数标签" class="headerlink" title="省略实际参数标签"></a>省略实际参数标签</h4><p>如果对于函数的形式参数不想使用实际参数标签的话，可以利用下划线（ _ ）来为这个形式参数代替显式的实际参数标签。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">someFunction</span><span class="params">(<span class="number">_</span> firstParameterName: Int, secondParameterName: Int)</span></span> &#123;</div><div class="line">    <span class="comment">// In the function body, firstParameterName and secondParameterName</span></div><div class="line">    <span class="comment">// refer to the argument values for the first and second parameters.</span></div><div class="line">&#125;</div><div class="line">someFunction(<span class="number">1</span>, secondParameterName: <span class="number">2</span>)</div></pre></td></tr></table></figure>
+<h4 id="默认形式参数值"><a href="#默认形式参数值" class="headerlink" title="默认形式参数值"></a>默认形式参数值</h4><p>你可以通过在形式参数类型后给形式参数赋一个值来给函数的任意形式参数定义一个<strong>默认值</strong>。如果定义了默认值，你就可以在调用函数时候<em>省略这个形式参数</em>。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">someFunction</span><span class="params">(parameterWithDefault: Int = <span class="number">12</span>)</span></span> &#123;</div><div class="line">    <span class="comment">// In the function body, if no arguments are passed to the function</span></div><div class="line">    <span class="comment">// call, the value of parameterWithDefault is 12.</span></div><div class="line">&#125;</div><div class="line">someFunction(parameterWithDefault: <span class="number">6</span>) <span class="comment">// parameterWithDefault is 6</span></div><div class="line">someFunction()                        <span class="comment">// parameterWithDefault is 12</span></div></pre></td></tr></table></figure>
+<p>把不带有默认值的形式参数放到函数的形式参数列表中带有默认值的形式参数前边，不带有默认值的形式参数通常对函数有着重要的意义——把它们写在前边可以便于让人们看出来无论是否省略带默认值的形式参数，调用的都是同一个函数。</p>
+<h4 id="可变形式参数"><a href="#可变形式参数" class="headerlink" title="可变形式参数"></a>可变形式参数</h4><p>一个可变形式参数可以接受<strong>零或者多个</strong>特定类型的值。当调用函数的时候你可以利用可变形式参数来声明形式参数可以被传入值的数量<em>是可变的</em>。可以通过在形式参数的类型名称后边插入三个点符号（ …）来书写可变形式参数。传入到可变参数中的值在函数的主体中被当作是<strong>对应类型的数组</strong>。</p>
+<p>举个栗子，一个可变参数的名字是 <code>numbers</code>类型是 <code>Double...</code>在函数的主体中它会被当作名字是 <code>numbers</code> 类型是 <code>[Double]</code>的常量数组。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">arithmeticMean</span><span class="params">(numbers: Double...)</span></span> -&gt; <span class="type">Double</span> &#123;</div><div class="line">    <span class="keyword">var</span> total: <span class="type">Double</span> = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> number <span class="keyword">in</span> numbers &#123;</div><div class="line">        total += number</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> total / <span class="type">Double</span>(numbers.<span class="built_in">count</span>)</div><div class="line">&#125;</div><div class="line">arithmeticMean(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)</div><div class="line"><span class="comment">// returns 3.0, which is the arithmetic mean of these five numbers</span></div><div class="line">arithmeticMean(<span class="number">3</span>, <span class="number">8.25</span>, <span class="number">18.75</span>)</div><div class="line"><span class="comment">// returns 10.0, which is the arithmetic mean of these three numbers</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：一个函数最多只能有一个可变形式参数。</p>
+</blockquote>
+<h4 id="输入输出形式参数"><a href="#输入输出形式参数" class="headerlink" title="输入输出形式参数"></a>输入输出形式参数</h4><p>你想函数能够修改一个形式参数的值，而且你想这些改变在函数结束之后<em>依然生效</em>，那么就需要将形式参数定义为<em>输入输出形式参数</em>。<br>在形式参数定义开始的时候在前边添加一个 <code>inout</code>关键字可以定义一个<em>输入输出形式参数</em>。输入输出形式参数有一个能输入给函数的值，函数能对其进行修改，还能输出到函数外边替换原来的值。</p>
+<p>调用时，你只能把<strong>变量</strong>作为输入输出形式参数的实际参数。你不能用常量或者字面量作为实际参数，因为常量和字面量不能修改。在将变量作为实际参数传递给输入输出形式参数的时候，直接在它前边添加一个<code>(&amp;)</code><em>符号来明确可以被函数修改</em>。</p>
+<p>这里有一个 <code>swapTwoInts(_:_:)</code>函数，它有两个输入输出整数形式参数 a和 b：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">swapTwoInts</span><span class="params">(<span class="number">_</span> a: <span class="keyword">inout</span> Int, <span class="number">_</span> b: <span class="keyword">inout</span> Int)</span></span> &#123;</div><div class="line">    <span class="keyword">let</span> temporaryA = a</div><div class="line">    a = b</div><div class="line">    b = temporaryA</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>你可以通过两个<code>Int</code>类型的变量来调用函数 <code>swapTwoInts(_:_:)</code>去调换它们两个的值，需要注意的是 <code>someInt</code>的值和 <code>anotherInt</code>的值在传入函数 <code>swapTwoInts(_:_:)</code>时都添加了’<em>和</em>‘符号。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> someInt = <span class="number">3</span></div><div class="line"><span class="keyword">var</span> anotherInt = <span class="number">107</span></div><div class="line"><span class="built_in">swap</span>(&amp;someInt, &amp;anotherInt)</div><div class="line"><span class="built_in">print</span>(<span class="string">"someInt is now <span class="subst">\(someInt)</span>, and anotherInt is now <span class="subst">\(anotherInt)</span>"</span>)</div><div class="line"><span class="comment">// prints "someInt is now 107, and anotherInt is now 3"</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>输入输出形式参数与函数的返回值不同。上边的 <code>swapTwoInts</code>没有定义返回类型和返回值，但它仍然能修改 <code>someInt</code>和 <code>anotherInt</code>的值。输入输出形式参数是函数能影响到函数范围外的另一种替代方式。</p>
+</blockquote>
+<h3 id="函数类型"><a href="#函数类型" class="headerlink" title="函数类型"></a>函数类型</h3><p>每一个函数都有一个特定的<strong>函数类型</strong>，它由<em>形式参数类型，返回类型</em>组成。<br>栗子🌰：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">addTwoInts</span><span class="params">(<span class="number">_</span> a: Int, <span class="number">_</span> b: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">    <span class="keyword">return</span> a + b</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">multiplyTwoInts</span><span class="params">(<span class="number">_</span> a: Int, <span class="number">_</span> b: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">    <span class="keyword">return</span> a * b</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上边的栗子定义了两个简单的数学函数 <code>addTwoInts</code>和 <code>multiplyTwoInts</code> 。这两个函数每个传入两个 <code>Int</code>值，返回一个 <code>Int</code>值，就是函数经过数学运算得出的结果。</p>
+<p>这两个函数的类型都是 <code>(Int, Int) -&gt; Int</code> 。也读作：<br><em>“有两个形式参数的函数类型，它们都是 Int类型，并且返回一个 Int类型的值。”</em></p>
+<p>下边的另外一个栗子，一个没有形式参数和返回值的函数。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">printHelloWorld</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"hello, world"</span>)</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">printHelloWorld</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"hello, world"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个函数的类型是 <code>() -&gt; Void</code>，或者 <em>“一个没有形式参数的函数，返回 <code>Void</code>。”</em></p>
+<h4 id="使用函数类型"><a href="#使用函数类型" class="headerlink" title="使用函数类型"></a>使用函数类型</h4><p>你可以像使用 Swift 中的其他类型一样使用函数类型。例如，你可以给一个常量或变量定义一个函数类型，并且为变量指定一个相应的函数。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mathFunction: (<span class="type">Int</span>, <span class="type">Int</span>) -&gt; <span class="type">Int</span> = addTwoInts</div></pre></td></tr></table></figure>
+<p>读作：<em>“定义一个叫做 <code>mathFunction</code>的变量，它的类型是‘一个能接受两个 <code>Int</code>值的函数，并返回一个 <code>Int</code>值。’将这个新的变量指向 <code>addTwoInts</code>函数。”</em></p>
+<p>可以利用名字 <code>mathFunction</code>来调用指定的函数。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">print</span>(<span class="string">"Result: <span class="subst">\(mathFunction(<span class="number">2</span>, <span class="number">3</span>)</span>)"</span>)</div><div class="line"><span class="comment">// prints "Result: 5"</span></div></pre></td></tr></table></figure>
+<p>同样也适用于<code>multiplyTwoInts(_:_:)</code></p>
+<h4 id="函数类型作为形式参数类型"><a href="#函数类型作为形式参数类型" class="headerlink" title="函数类型作为形式参数类型"></a>函数类型作为形式参数类型</h4><p>利用使用一个函数的类型例如 <code>(Int, Int) -&gt; Int</code>作为其他函数的<em>&gt; Int`</em>。这允许你预留函数的部分实现从而让函数的调用者在调用函数的时候提供。</p>
+<p>下面的栗子打印出了上文中数学函数执行后的结果：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">printMathResult</span><span class="params">(<span class="number">_</span> mathFunction: <span class="params">(Int, Int)</span></span></span> -&gt; <span class="type">Int</span>, <span class="number">_</span> a: <span class="type">Int</span>, <span class="number">_</span> b: <span class="type">Int</span>) &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"Result: <span class="subst">\(mathFunction(a, b)</span>)"</span>)</div><div class="line">&#125;</div><div class="line">printMathResult(addTwoInts, <span class="number">3</span>, <span class="number">5</span>)</div><div class="line"><span class="comment">// Prints "Result: 8"</span></div></pre></td></tr></table></figure>
+<p>函数 <code>printMathResult(_:_:_:)</code>的作用就是当调用一个相应类型的数学函数的时候打印出结果。它并不关心函数在实现过程中究竟做了些什么，它只关心函数是不是正确的类型。这使得函数 <code>printMathResult(_:_:_:)</code>以一种类型安全的方式把自身的功能传递给调用者。</p>
+<h4 id="函数类型作为返回类型"><a href="#函数类型作为返回类型" class="headerlink" title="函数类型作为返回类型"></a>函数类型作为返回类型</h4><p>利用函数的类型作为另一个函数的返回类型。写法是在函数的返回箭头（ -&gt;）后立即写一个完整的<em>函数类型</em>。<br>下边的栗子定义了两个简单函数叫做 <code>stepForward(_:)</code>和 <code>stepBackward(_:)</code>。函数 <code>stepForward(_:)</code>返回一个大于输入值的值，而 <code>stepBackward(_:)</code>返回一个小于输入值的值。这两个函数的类型都是 <code>(Int) -&gt; Int</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">stepForward</span><span class="params">(<span class="number">_</span> input: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">    <span class="keyword">return</span> input + <span class="number">1</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">stepBackward</span><span class="params">(<span class="number">_</span> input: Int)</span></span> -&gt; <span class="type">Int</span> &#123;</div><div class="line">    <span class="keyword">return</span> input - <span class="number">1</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里有一个函数 <code>chooseStepFunction(backward:)</code>，它的返回类型是“一个函数的类型 <code>(Int) -&gt; Int</code>”。函数 <code>chooseStepFunction(backward:)</code>返回了 <code>stepForward(_:)</code>函数或者一个基于叫做 <code>backwards</code> 的布尔量形式参数的函数 <code>stepBackward(_:)</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">chooseStepFunction</span><span class="params">(backwards: Bool)</span></span> -&gt; (<span class="type">Int</span>) -&gt; <span class="type">Int</span> &#123;</div><div class="line">    <span class="keyword">return</span> backwards ? stepBackward : stepForward</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> currentValue = <span class="number">3</span></div><div class="line"><span class="keyword">let</span> moveNearerToZero = chooseStepFunction(backward: currentValue &gt; <span class="number">0</span>)</div><div class="line"><span class="comment">// moveNearerToZero now refers to the stepBackward() function</span></div></pre></td></tr></table></figure>
+<h3 id="内嵌函数"><a href="#内嵌函数" class="headerlink" title="内嵌函数"></a>内嵌函数</h3><p>到目前为止，你在本章中遇到的所有函数都是全局函数，都是在全局的范围内进行定义的。你也可以在函数的内部定义另外一个函数。这就是内嵌函数。</p>
+<p>内嵌函数在默认情况下在外部是被隐藏起来的，但却仍然可以通过包裹它们的函数来调用它们。包裹的函数也可以返回它内部的一个内嵌函数来在另外的范围里使用。</p>
+<p>你可以重写上边的栗子 <code>chooseStepFunction(backward:)</code>来使用和返回内嵌函数：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">chooseStepFunction</span><span class="params">(backward: Bool)</span></span> -&gt; (<span class="type">Int</span>) -&gt; <span class="type">Int</span> &#123;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">stepForward</span><span class="params">(input: Int)</span></span> -&gt; <span class="type">Int</span> &#123; <span class="keyword">return</span> input + <span class="number">1</span>&#125;</div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">stepBackward</span><span class="params">(input: Int)</span></span> -&gt; <span class="type">Int</span> &#123; <span class="keyword">return</span> input - <span class="number">1</span>&#125;</div><div class="line">    <span class="keyword">return</span> backward ? stepBackward : stepForward</div><div class="line">&#125;</div><div class="line">currentValue = -<span class="number">4</span></div><div class="line">moveNearerToZero = chooseStepFunction(backward: currentValue &gt; <span class="number">0</span>)</div><div class="line"><span class="keyword">while</span> currentValue != <span class="number">0</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"<span class="subst">\(currentValue)</span>... "</span>)</div><div class="line">    currentValue = moveNearerToZero(currentValue)</div><div class="line">&#125;</div><div class="line"><span class="built_in">print</span>(<span class="string">"zero!"</span>)</div><div class="line"><span class="comment">// -4...</span></div><div class="line"><span class="comment">// -3...</span></div><div class="line"><span class="comment">// -2...</span></div><div class="line"><span class="comment">// -1...</span></div><div class="line"><span class="comment">// zero!</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>摘自：<a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0" target="_blank" rel="external">swift 官网</a><br>所有代码在Xcode9 Swift4 环境编译没问题，代码<a href="https://github.com/keshiim/LearnSwift4" target="_blank" rel="external">戳这里 https://github.com/keshiim/LearnSwift4</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Zheng keshiim WeChat Pay"/>
+        <p>WeChat Pay(微信)</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="Zheng keshiim Alipay"/>
+        <p>Alipay(支付宝)</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zheng keshiim
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://keshiim.github.io/2017/11/10/Swift-function/" title="Swift：函数">https://keshiim.github.io/2017/11/10/Swift-function/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Swift/" rel="tag"># Swift</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/09/Swift-Control/" rel="next" title="Swift：控制流">
+                <i class="fa fa-chevron-left"></i> Swift：控制流
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/10/closure/" rel="prev" title="Swift：闭包">
+                Swift：闭包 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="Zheng keshiim" />
+          <p class="site-author-name" itemprop="name">Zheng keshiim</p>
+           
+              <p class="site-description motion-element" itemprop="description">一个☝程序猿的播种天地</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/keshiim" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/Jasonzhengkeshi" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                    
+                      Twitter
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/1997859257" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                    
+                      Weibo
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jason-zheng-17/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      知乎
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义和调用函数"><span class="nav-number">1.</span> <span class="nav-text">定义和调用函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数的形式参数和返回值"><span class="nav-number">2.</span> <span class="nav-text">函数的形式参数和返回值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无形式参数的函数"><span class="nav-number">2.1.</span> <span class="nav-text">无形式参数的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多形式参数的函数"><span class="nav-number">2.2.</span> <span class="nav-text">多形式参数的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无返回值的函数"><span class="nav-number">2.3.</span> <span class="nav-text">无返回值的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多返回值的函数"><span class="nav-number">2.4.</span> <span class="nav-text">多返回值的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可选元组返回类型"><span class="nav-number">2.5.</span> <span class="nav-text">可选元组返回类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数实际参数标签和形式参数名"><span class="nav-number">3.</span> <span class="nav-text">函数实际参数标签和形式参数名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#指定实际参数标签"><span class="nav-number">3.1.</span> <span class="nav-text">指定实际参数标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#省略实际参数标签"><span class="nav-number">3.2.</span> <span class="nav-text">省略实际参数标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#默认形式参数值"><span class="nav-number">3.3.</span> <span class="nav-text">默认形式参数值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可变形式参数"><span class="nav-number">3.4.</span> <span class="nav-text">可变形式参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入输出形式参数"><span class="nav-number">3.5.</span> <span class="nav-text">输入输出形式参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数类型"><span class="nav-number">4.</span> <span class="nav-text">函数类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用函数类型"><span class="nav-number">4.1.</span> <span class="nav-text">使用函数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数类型作为形式参数类型"><span class="nav-number">4.2.</span> <span class="nav-text">函数类型作为形式参数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数类型作为返回类型"><span class="nav-number">4.3.</span> <span class="nav-text">函数类型作为返回类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内嵌函数"><span class="nav-number">5.</span> <span class="nav-text">内嵌函数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zheng keshiim</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://keshiim.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://keshiim.github.io/2017/11/10/Swift-function/';
+          this.page.identifier = '2017/11/10/Swift-function/';
+          this.page.title = 'Swift：函数';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://keshiim.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("II40xJrcdEwAMUcs8t0GQCM7-gzGzoHsz", "6u6FB7dghxObIE4zhaUKCYoF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
